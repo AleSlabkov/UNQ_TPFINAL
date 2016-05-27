@@ -8,12 +8,13 @@ public class Modelo {
 	private Integer cantidadPuertas;
 	private LocalDate fechaLanzamiento;
 	private float precioBase;
-	private String lalalala;
+
 	
 	public Modelo(String nombre, Integer cantidadPuertas, LocalDate fechaLanzamiento, float precioBase){
 		this.nombre = nombre;
 		this.cantidadPuertas = cantidadPuertas;
 		this.fechaLanzamiento = fechaLanzamiento;
+		this.precioBase = precioBase;
 	}
 	
 	public String getNombre(){
