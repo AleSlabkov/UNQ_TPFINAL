@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 
 
-public class Concesionario {
+public class Concesionario implements IObserverStock {
 
 	private String nombre;
 	private String direccion;
@@ -60,6 +60,12 @@ public class Concesionario {
 	public Optional<PlanAhorro> getPlanAhorroByNumeroGrupo(Integer numero){
 		
 		return planes.stream().filter(u -> u.getNumeroGrupo() == numero).findFirst();
+	}
+
+	@Override
+	public void update(Modelo m, Integer cantidad) {
+		// TODO tomar la lista de stock y actualizar
+		
 	}
 
 }

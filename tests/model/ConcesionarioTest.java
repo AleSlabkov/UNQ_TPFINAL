@@ -28,7 +28,7 @@ public class ConcesionarioTest {
 	private void registrarPlanes() {
 		//GENERO 100 PLANES CON 10 SUBSCRIPCIONES CADA UNO
 		for(int i = 0; i < 100; i++){
-			PlanAhorro plan = new PlanAhorro(i + 1, new Modelo(), null, null);
+			PlanAhorro plan = new PlanAhorro(i + 1, new Modelo("Gol Trend", 5, LocalDate.of(2015, 1, 1), 120000), null, null);
 			
 			for(int cliente = 0; cliente < 10; cliente++)
 				plan.agregarSubscripcion(concesionario.getClientes().get(cliente));
