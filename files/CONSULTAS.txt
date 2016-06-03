@@ -1,5 +1,5 @@
-* stock planta, esta bien que cada uno tenga su stock o se comparten las instancias?
+* stock planta, esta bien que cada uno tenga su stock o se comparten las instancias? = se comparten instancias
 * que hacer cuando se adjudica un modelo? se pide el modelo a la fabrica o a la planta? y el stock?
 * cómo muestro en el diagrama el ejemplo: un modelo tiene varias plantas de produccion y una planta produce varios modelos? 
-* un modelo se puede producir en diferentes plantas
-* precion base o en version?
+* un modelo se puede producir en diferentes plantas = si
+* precio base o en version? = precio base / simplificar
