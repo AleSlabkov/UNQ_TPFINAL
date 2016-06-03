@@ -1,5 +1,7 @@
 package model;
 
-public interface Version {
+public abstract class Version {
+	
+	abstract Integer getPrecio();
 
 }

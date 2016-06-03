@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
-
 public class Concesionario implements IObserverStock {
 
 	private String nombre;
@@ -14,7 +12,6 @@ public class Concesionario implements IObserverStock {
 	private List<Cliente> clientes;
 	private List<PlanAhorro> planes;
 	private Fabrica fabrica;
-
 
 	public Concesionario(String nombre, String direccion, Fabrica fabrica) {
 		this.nombre = nombre;
@@ -45,27 +42,29 @@ public class Concesionario implements IObserverStock {
 	}
 
 	public List<PlanAhorro> getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDesc() {
-		
+
 		return this.planes
-        .stream()
-        .sorted((e1, e2) -> Integer.compare(e2.getSubscripciones().size(),
-        		e1.getSubscripciones().size())).limit(10).collect(Collectors.toList());
-		
+				.stream()
+				.sorted((e1, e2) -> Integer.compare(e2.getSubscripciones()
+						.size(), e1.getSubscripciones().size())).limit(10)
+				.collect(Collectors.toList());
+
 	}
 
 	public void agregarPlanAhorro(PlanAhorro c) {
 		this.planes.add(c);
 	}
-	
-	public Optional<PlanAhorro> getPlanAhorroByNumeroGrupo(Integer numero){
-		
-		return planes.stream().filter(u -> u.getNumeroGrupo() == numero).findFirst();
+
+	public Optional<PlanAhorro> getPlanAhorroByNumeroGrupo(Integer numero) {
+
+		return planes.stream().filter(u -> u.getNumeroGrupo() == numero)
+				.findFirst();
 	}
 
 	@Override
 	public void update(Modelo m, Integer cantidad) {
 		// TODO tomar la lista de stock y actualizar
-		
+
 	}
 
 }
