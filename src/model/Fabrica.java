@@ -3,28 +3,53 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fabrica {
+public class Fabrica implements IObservable, IObserver {
 
-	private List<IObserverStock> registered;
+	private String nombre;
 	private List<Planta> plantas;
-	
-	public Fabrica()
-	{
-		this.registered = new ArrayList<IObserverStock>();
+	private List<IObserver> observers;
+
+	public Fabrica(String nombre) {
+		this.nombre = nombre;
 		this.plantas = new ArrayList<Planta>();
+		this.observers = new ArrayList<IObserver>();
 	}
-	
-	public void agregarPlanta(String nombre)
-	{
-		this.plantas.add(new Planta(nombre, this));
+
+	public String getNombre() {
+		return nombre;
 	}
-	
-	public void agregarStockAPlanta(Modelo m, Integer cantidad)
-	{
-		//obtengo la planta y ejecuto el agregar stock
-		
-		for (IObserverStock ob : registered) 
-			ob.update(m, cantidad);
-		
+
+	public void agregarPlanta(Planta planta) {
+		this.plantas.add(planta);
+
+	}
+
+	public List<Planta> getPlantas() {
+		return this.plantas;
+	}
+
+	@Override
+	public void addObserver(IObserver o) {
+		this.observers.add(o);
+	}
+
+	@Override
+	public void deleteObserver(IObserver o) {
+		this.observers.remove(o);
+
+	}
+
+	@Override
+	public void notifyObservers() {
+	}
+
+	@Override
+	public void notifyObservers(Object data) {
+		this.observers.stream().forEach(o -> o.update(this, data));
+	}
+
+	@Override
+	public void update(IObservable o, Object data) {
+		notifyObservers(data);
 	}
 }
