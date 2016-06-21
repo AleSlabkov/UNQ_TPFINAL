@@ -38,7 +38,7 @@ public class PlanDeAhorroTest {
 	 */
 	@Test
 	public void crearPlanTest() {
-		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(),
+		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
 				new Financiamiento100());
 		
 		assertEquals(plan.getModelo().getNombre(), "Gol Trend");
@@ -52,12 +52,25 @@ public class PlanDeAhorroTest {
 	@Test
 	public void adjudicarPlan100PorcientoPorSorteo() {
 
-		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(),
+		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
 				new Financiamiento100());
 		plan.agregarSubscripcion(clienteAle);
 		plan.agregarSubscripcion(clienteMartin);
 
 		assertNotNull(plan.adjudicar());
+	}
+	/**
+	 * Testea las subscripciones sin adjudicacion
+	 */
+	@Test
+	public void getSubscripcionesSinAdjudicacionTest(){
+		
+		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
+				new Financiamiento100());
+		plan.agregarSubscripcion(clienteAle);
+		plan.agregarSubscripcion(clienteMartin);
+
+		assertEquals(plan.getSubscripcionesSinAdjudicacion().size(), 2);
 	}
 
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlanDeAhorro {
 
@@ -51,5 +52,11 @@ public class PlanDeAhorro {
 
 	public Subscripcion adjudicar() {	
 		return this.tipoAdjudicacion.adjudicar(this);
+	}
+	
+	public List<Subscripcion> getSubscripcionesSinAdjudicacion() {
+		return subscripciones.stream() 
+			      .filter(s -> !s.estaAdjudicada())
+			      .collect(Collectors.toList());
 	}
 }
