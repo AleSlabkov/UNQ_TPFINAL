@@ -141,10 +141,10 @@ public class ConcesionarioTest {
 	public void stockConcesionarioTest() {
 		
 		Fabrica fabrica = new Fabrica("VolksWagen");
-		fabrica.addObserver(concesionario);
+		fabrica.subscribirCambiosStock(concesionario);
 			
 		Planta planta = new Planta("Planta1", fabrica);
-		planta.addObserver(fabrica);
+		planta.subscribirCambiosStock(fabrica);
 		planta.producirModelo(golTrend, 30000);
 		planta.producirModelo(vento, 10000);	
 		
@@ -159,15 +159,15 @@ public class ConcesionarioTest {
 	public void stockConcesionarioConDosPlantasTest() {
 		
 		Fabrica fabrica = new Fabrica("VolksWagen");
-		fabrica.addObserver(concesionario);
+		fabrica.subscribirCambiosStock(concesionario);
 		
 		Planta planta1 = new Planta("Planta1", fabrica);
-		planta1.addObserver(fabrica);
+		planta1.subscribirCambiosStock(fabrica);
 		planta1.producirModelo(golTrend, 30000);
 		planta1.producirModelo(vento, 10000);
 		
 		Planta planta2 = new Planta("Planta2", fabrica);
-		planta2.addObserver(fabrica);
+		planta2.subscribirCambiosStock(fabrica);
 		planta2.producirModelo(golTrend, 20000);
 		planta2.producirModelo(vento, 10000);	
 		
@@ -183,15 +183,15 @@ public class ConcesionarioTest {
 	public void stockConcesionarioConDosPlantasYLiberacionesTest() {
 		
 		Fabrica fabrica = new Fabrica("VolksWagen");
-		fabrica.addObserver(concesionario);
+		fabrica.subscribirCambiosStock(concesionario);
 		
 		Planta planta1 = new Planta("Planta1", fabrica);
-		planta1.addObserver(fabrica);
+		planta1.subscribirCambiosStock(fabrica);
 		planta1.producirModelo(golTrend, 30000);
 		planta1.producirModelo(vento, 10000);
 		
 		Planta planta2 = new Planta("Planta2", fabrica);
-		planta2.addObserver(fabrica);
+		planta2.subscribirCambiosStock(fabrica);
 		planta2.producirModelo(golTrend, 20000);
 		planta2.producirModelo(vento, 10000);	
 		

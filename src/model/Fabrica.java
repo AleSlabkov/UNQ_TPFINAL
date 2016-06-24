@@ -3,16 +3,16 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fabrica implements IObservable, IObserver {
+public class Fabrica implements ICambioStock, IStockObserver {
 
 	private String nombre;
 	private List<Planta> plantas;
-	private List<IObserver> observers;
+	private List<IStockObserver> stockObservers;
 
 	public Fabrica(String nombre) {
 		this.nombre = nombre;
 		this.plantas = new ArrayList<Planta>();
-		this.observers = new ArrayList<IObserver>();
+		this.stockObservers = new ArrayList<IStockObserver>();
 	}
 
 	public String getNombre() {
@@ -29,27 +29,35 @@ public class Fabrica implements IObservable, IObserver {
 	}
 
 	@Override
-	public void addObserver(IObserver o) {
-		this.observers.add(o);
+	public void subscribirCambiosStock(IStockObserver o) {
+		this.stockObservers.add(o);
 	}
 
 	@Override
-	public void deleteObserver(IObserver o) {
-		this.observers.remove(o);
+	public void desusbcribirCambiosStock(IStockObserver o) {
+		this.stockObservers.remove(o);
 
 	}
 
 	@Override
-	public void notifyObservers() {
+	public void informarNuevoStock(Object data) {
+		this.stockObservers.stream().forEach(o -> o.aumentarStock(this, data));
 	}
 
 	@Override
-	public void notifyObservers(Object data) {
-		this.observers.stream().forEach(o -> o.update(this, data));
+	public void aumentarStock(ICambioStock o, Object data) {
+		informarNuevoStock(data);
 	}
 
 	@Override
-	public void update(IObservable o, Object data) {
-		notifyObservers(data);
+	public void liberarStock(ICambioStock o, Object data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void informarBajaStock(Object data) {
+		// TODO Auto-generated method stub
+		
 	}
 }

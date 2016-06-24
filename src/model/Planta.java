@@ -3,20 +3,20 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Planta implements IObservable {
+public class Planta implements ICambioStock {
 
 	private String nombre;
 	private Fabrica fabrica;
 	private List<Modelo> modelosProducidos;
 	private List<StockModelo> stock;
-	private List<IObserver> observers;
+	private List<IStockObserver> stockObservers;
 
 	public Planta(String nombre, Fabrica f) {
 		this.fabrica = f;
 		this.nombre = nombre;
 		this.modelosProducidos = new ArrayList<Modelo>();
 		this.stock = new ArrayList<StockModelo>();
-		this.observers = new ArrayList<IObserver>();
+		this.stockObservers = new ArrayList<IStockObserver>();
 	}
 
 	public String getNombre() {
@@ -42,7 +42,7 @@ public class Planta implements IObservable {
 			this.stock.add(new StockModelo(modelo, cantidad));
 		}
 		
-		notifyObservers(new StockModelo(modelo, cantidad));
+		informarNuevoStock(new StockModelo(modelo, cantidad));
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class Planta implements IObservable {
 	public void liberarStockModelo(Modelo modelo, int cantidad) {
 		updateStock(modelo, cantidad * -1);
 		
-		notifyObservers(new StockModelo(modelo, cantidad * -1));
+		informarNuevoStock(new StockModelo(modelo, cantidad * -1));
 	}
 
 	private void updateStock(Modelo modelo, Integer cantidad) {
@@ -70,21 +70,23 @@ public class Planta implements IObservable {
 	}
 
 	@Override
-	public void addObserver(IObserver o) {
-		this.observers.add(o);
+	public void subscribirCambiosStock(IStockObserver o) {
+		this.stockObservers.add(o);
 	}
 
 	@Override
-	public void deleteObserver(IObserver o) {
-		this.observers.remove(o);
+	public void desusbcribirCambiosStock(IStockObserver o) {
+		this.stockObservers.remove(o);
 	}
 
 	@Override
-	public void notifyObservers() {
+	public void informarNuevoStock(Object data) {
+		this.stockObservers.stream().forEach(o -> o.aumentarStock(this, data));
 	}
 
 	@Override
-	public void notifyObservers(Object data) {
-		this.observers.stream().forEach(o -> o.update(this, data));
+	public void informarBajaStock(Object data) {
+		// TODO Auto-generated method stub
+		
 	}
 }

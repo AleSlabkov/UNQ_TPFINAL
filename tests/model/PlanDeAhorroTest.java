@@ -1,8 +1,10 @@
 package model;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,14 +50,18 @@ public class PlanDeAhorroTest {
 	/**
 	 * Testea el funcionamiento de la adjudicación de un plan con financiamiento
 	 * del 100% por sorteo
+	 * @throws SinAdjudicableException 
 	 */
 	@Test
-	public void adjudicarPlan100PorcientoPorSorteo() {
+	public void adjudicarPlan100PorcientoPorSorteo() throws SinAdjudicableException {
 
-		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
+		Cliente cliente1 = mock(Cliente.class);
+		Cliente cliente2 = mock(Cliente.class);
+		
+		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(new Random()),
 				new Financiamiento100());
-		plan.agregarSubscripcion(clienteAle);
-		plan.agregarSubscripcion(clienteMartin);
+		plan.agregarSubscripcion(cliente1);
+		plan.agregarSubscripcion(cliente2);
 
 		assertNotNull(plan.adjudicar());
 	}

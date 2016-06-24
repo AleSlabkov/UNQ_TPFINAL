@@ -13,10 +13,13 @@ public class Sorteo implements IAdjudicacion {
 	}
 
 	@Override
-	public Subscripcion adjudicar(PlanDeAhorro plan) {
+	public Subscripcion adjudicar(PlanDeAhorro plan) throws SinAdjudicableException {
 		
 		//obtengo subscripciones sin adjudicar
 		List<Subscripcion> subs = plan.getSubscripcionesSinAdjudicacion();
+		
+		if(subs.isEmpty())
+			throw new SinAdjudicableException();
 		
 		//uso el random
 		Integer number = rnd.nextInt(subs.size());

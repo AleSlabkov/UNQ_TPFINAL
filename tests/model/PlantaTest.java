@@ -6,6 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.matchers.Any;
+
+import static org.mockito.Mockito.*;
+
 
 public class PlantaTest {
 
@@ -46,10 +50,33 @@ public class PlantaTest {
 	 */
 	@Test
 	public void producirModeloTest() {
+		
+
 		planta.producirModelo(modelo, 1000);
 		planta.producirModelo(modelo, 2000);
 
 		assertEquals(planta.getCantidadByModelo(modelo), (Integer) 3000);
+	}
+	
+	/**
+	 * testea que se notifique a un observer registrado
+	 */
+	@Test
+	public void producirModeloVerifyNotification() {
+		
+
+		IStockObserver observer1 = mock(IStockObserver.class);
+		IStockObserver observer2 = mock(IStockObserver.class);
+		
+		planta.subscribirCambiosStock(observer1);
+		planta.subscribirCambiosStock(observer2);
+		
+		planta.producirModelo(modelo, 1);
+		
+		verify(observer1).aumentarStock(eq(planta), any());
+		verify(observer2).aumentarStock(eq(planta), any());
+
+
 	}
 
 	/**

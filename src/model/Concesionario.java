@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Concesionario implements IObserver {
+public class Concesionario implements IStockObserver {
 
 	private String nombre;
 	private String direccion;
@@ -73,7 +73,7 @@ public class Concesionario implements IObserver {
 	}
 
 	@Override
-	public void update(IObservable o, Object data) {
+	public void aumentarStock(ICambioStock o, Object data) {
 		updateStock((StockModelo)data);
 	}
 
@@ -89,6 +89,12 @@ public class Concesionario implements IObserver {
 		StockModelo stock = this.stock.stream()
 				.filter(s -> s.getModelo() == stockNew.getModelo()).findFirst().get();
 		stock.setCantidad(stock.getCantidad() + stockNew.getCantidad());
+	}
+
+	@Override
+	public void liberarStock(ICambioStock o, Object data) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -36,4 +36,8 @@ public class FabricaTest {
 
 		assertEquals(fabrica.getPlantas().size(), 1);
 	}
+	
+	
+	
+	
 }

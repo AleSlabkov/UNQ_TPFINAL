@@ -13,7 +13,8 @@ public class PlanDeAhorro {
 	private IAdjudicacion tipoAdjudicacion;
 	private IFinanciamiento financiamiento;
 
-	public PlanDeAhorro(Integer numeroGrupo, Modelo modelo, Integer cantidadDeCoutas, IAdjudicacion tipoAdjudicacion, IFinanciamiento financiamiento) {
+	public PlanDeAhorro(Integer numeroGrupo, Modelo modelo, Integer cantidadDeCoutas, IAdjudicacion tipoAdjudicacion,
+			IFinanciamiento financiamiento) {
 		this.numeroGrupo = numeroGrupo;
 		this.modelo = modelo;
 		this.cantidadDeCoutas = cantidadDeCoutas;
@@ -50,13 +51,11 @@ public class PlanDeAhorro {
 		this.subscripciones.add(new Subscripcion(cliente));
 	}
 
-	public Subscripcion adjudicar() {	
+	public Subscripcion adjudicar() throws SinAdjudicableException {
 		return this.tipoAdjudicacion.adjudicar(this);
 	}
-	
+
 	public List<Subscripcion> getSubscripcionesSinAdjudicacion() {
-		return subscripciones.stream() 
-			      .filter(s -> !s.estaAdjudicada())
-			      .collect(Collectors.toList());
+		return subscripciones.stream().filter(s -> !s.estaAdjudicada()).collect(Collectors.toList());
 	}
 }
