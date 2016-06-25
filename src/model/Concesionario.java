@@ -73,27 +73,27 @@ public class Concesionario implements IStockObserver {
 	}
 
 	@Override
-	public void aumentarStock(ICambioStock o, Object data) {
-		updateStock((StockModelo)data);
+	public void aumentarStock(ICambioStock o, Modelo m, Integer cantidad) {
+		updateStock(m, cantidad);
 	}
 
-	private void updateStock(StockModelo stock) {
-		if (this.stock.stream().anyMatch(s -> s.getModelo() == stock.getModelo())) {
-			updateCantidad(stock);
+	private void updateStock(Modelo m, Integer cantidad) {
+		if (this.stock.stream().anyMatch(s -> s.getModelo() == m)) {
+			updateCantidad(m, cantidad);
 		} else {
-			this.stock.add(stock);
+			this.stock.add(new StockModelo(m, cantidad));
 		}
 	}
 
-	private void updateCantidad(StockModelo stockNew) {
+	private void updateCantidad(Modelo m, Integer cantidad) {
 		StockModelo stock = this.stock.stream()
-				.filter(s -> s.getModelo() == stockNew.getModelo()).findFirst().get();
-		stock.setCantidad(stock.getCantidad() + stockNew.getCantidad());
+				.filter(s -> s.getModelo() == m).findFirst().get();
+		stock.setCantidad(stock.getCantidad() + cantidad);
 	}
 
 	@Override
-	public void liberarStock(ICambioStock o, Object data) {
-		// TODO Auto-generated method stub
+	public void liberarStock(ICambioStock o, Modelo m, Integer cantidad) {
+		updateStock(m, cantidad * -1);
 		
 	}
 

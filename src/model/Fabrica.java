@@ -40,24 +40,24 @@ public class Fabrica implements ICambioStock, IStockObserver {
 	}
 
 	@Override
-	public void informarNuevoStock(Object data) {
-		this.stockObservers.stream().forEach(o -> o.aumentarStock(this, data));
+	public void informarNuevoStock(Modelo m, Integer cantidad) {
+		this.stockObservers.stream().forEach(o -> o.aumentarStock(this, m, cantidad));
 	}
 
 	@Override
-	public void aumentarStock(ICambioStock o, Object data) {
-		informarNuevoStock(data);
+	public void aumentarStock(ICambioStock o, Modelo m, Integer cantidad) {
+		informarNuevoStock(m, cantidad);
 	}
 
 	@Override
-	public void liberarStock(ICambioStock o, Object data) {
-		// TODO Auto-generated method stub
+	public void liberarStock(ICambioStock o, Modelo m, Integer cantidad) {
+		informarBajaStock(m, cantidad);
 		
 	}
 
 	@Override
-	public void informarBajaStock(Object data) {
-		// TODO Auto-generated method stub
+	public void informarBajaStock(Modelo m, Integer cantidad) {
+		this.stockObservers.stream().forEach(o -> o.liberarStock(this, m, cantidad));
 		
 	}
 }

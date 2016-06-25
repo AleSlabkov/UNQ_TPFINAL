@@ -42,7 +42,7 @@ public class Planta implements ICambioStock {
 			this.stock.add(new StockModelo(modelo, cantidad));
 		}
 		
-		informarNuevoStock(new StockModelo(modelo, cantidad));
+		informarNuevoStock(modelo, cantidad);
 	}
 
 	/**
@@ -53,9 +53,10 @@ public class Planta implements ICambioStock {
 	 * @param cantidad a eliminar
 	 */
 	public void liberarStockModelo(Modelo modelo, int cantidad) {
+		
 		updateStock(modelo, cantidad * -1);
 		
-		informarNuevoStock(new StockModelo(modelo, cantidad * -1));
+		informarBajaStock(modelo, cantidad);
 	}
 
 	private void updateStock(Modelo modelo, Integer cantidad) {
@@ -80,13 +81,13 @@ public class Planta implements ICambioStock {
 	}
 
 	@Override
-	public void informarNuevoStock(Object data) {
-		this.stockObservers.stream().forEach(o -> o.aumentarStock(this, data));
+	public void informarNuevoStock(Modelo m, Integer cantidad) {
+		this.stockObservers.stream().forEach(o -> o.aumentarStock(this, m, cantidad));
 	}
 
 	@Override
-	public void informarBajaStock(Object data) {
-		// TODO Auto-generated method stub
+	public void informarBajaStock(Modelo m, Integer cantidad) {
+		this.stockObservers.stream().forEach(o -> o.liberarStock(this, m, cantidad));
 		
 	}
 }

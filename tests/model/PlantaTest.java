@@ -73,8 +73,8 @@ public class PlantaTest {
 		
 		planta.producirModelo(modelo, 1);
 		
-		verify(observer1).aumentarStock(eq(planta), any());
-		verify(observer2).aumentarStock(eq(planta), any());
+		verify(observer1).aumentarStock(eq(planta), any(), any());
+		verify(observer2).aumentarStock(eq(planta), any(), any());
 
 
 	}

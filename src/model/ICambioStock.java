@@ -6,7 +6,7 @@ public interface ICambioStock {
 	
 	void desusbcribirCambiosStock(IStockObserver o);
 	
-	void informarNuevoStock(Object data);
+	void informarNuevoStock(Modelo m, Integer cantidad);
 	
-	void informarBajaStock(Object data);
+	void informarBajaStock(Modelo m, Integer cantidad);
 }
