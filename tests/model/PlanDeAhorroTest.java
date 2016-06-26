@@ -1,38 +1,29 @@
 package model;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
-import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.*;
 
 public class PlanDeAhorroTest {
 
 	PlanDeAhorro plan;
-	Cliente clienteAle;
-	Cliente clienteMartin;
+	@Mock
 	Subscripcion subscripcion1;
+	@Mock
 	Subscripcion subscripcion2;
+	@Mock
 	Modelo modelo;
 
 	@Before
 	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
 
-		clienteAle = new Cliente("Alejandro", "Slabkov", "3100000", "Hudson",
-				"ale@gmail.com", LocalDate.of(1985, 1, 1), LocalDate.of(2015,
-						12, 1));
-		clienteMartin = new Cliente("Martin", "Serna", "3100000", "Wilde",
-				"martin@gmail.com", LocalDate.of(1984, 4, 14), LocalDate.of(
-						2016, 1, 25));
-
-		subscripcion1 = new Subscripcion(clienteAle);
-		subscripcion2 = new Subscripcion(clienteMartin);
-
-		modelo = new Modelo("Gol Trend", 5, LocalDate.of(2015, 1, 1), false,
-				120000);
+		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
+				new Financiamiento100());
 	}
 
 	/**
@@ -40,43 +31,48 @@ public class PlanDeAhorroTest {
 	 */
 	@Test
 	public void crearPlanTest() {
-		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
-				new Financiamiento100());
-		
-		assertEquals(plan.getModelo().getNombre(), "Gol Trend");
-		assertEquals(plan.getCantidadDeCoutas(), (Integer)84);
+		assertEquals(plan.getModelo().getNombre(), modelo.getNombre());
+		assertEquals(plan.getCantidadDeCoutas(), (Integer) 84);
 	}
 
 	/**
-	 * Testea el funcionamiento de la adjudicación de un plan con financiamiento
-	 * del 100% por sorteo
-	 * @throws SinAdjudicableException 
+	 * Test el agregado de suscripciones al plan de ahorro
 	 */
 	@Test
-	public void adjudicarPlan100PorcientoPorSorteo() throws SinAdjudicableException {
-
-		Cliente cliente1 = mock(Cliente.class);
-		Cliente cliente2 = mock(Cliente.class);
+	public void agregarSuscripcionesTest() {
+		plan.agregarSubscripcion(subscripcion1);
+		plan.agregarSubscripcion(subscripcion2);
 		
-		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(new Random()),
-				new Financiamiento100());
-		plan.agregarSubscripcion(cliente1);
-		plan.agregarSubscripcion(cliente2);
 
-		assertNotNull(plan.adjudicar());
+		assertEquals(plan.getSubscripciones().size(), 2);
 	}
+
 	/**
-	 * Testea las subscripciones sin adjudicacion
+	 * Testea la obtención de subscripciones sin adjudicacion
 	 */
 	@Test
-	public void getSubscripcionesSinAdjudicacionTest(){
+	public void getSubscripcionesSinAdjudicacionTest() {
 		
-		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
-				new Financiamiento100());
-		plan.agregarSubscripcion(clienteAle);
-		plan.agregarSubscripcion(clienteMartin);
+		when(subscripcion1.estaAdjudicada()).thenReturn(true);
+		
+		plan.agregarSubscripcion(subscripcion1);
+		plan.agregarSubscripcion(subscripcion2);
 
-		assertEquals(plan.getSubscripcionesSinAdjudicacion().size(), 2);
+		assertEquals(plan.getSubscripcionesSinAdjudicacion().size(), 1);
 	}
+	
+	/**
+	 * Testea la obtención de subscripciones sin adjudicacion en un plan completamente adjudicado
+	 */
+	@Test
+	public void getSubscripcionesSinAdjudicacionFail() {
+		
+		when(subscripcion1.estaAdjudicada()).thenReturn(true);
+		when(subscripcion2.estaAdjudicada()).thenReturn(true);
+		
+		plan.agregarSubscripcion(subscripcion1);
+		plan.agregarSubscripcion(subscripcion2);
 
+		assertTrue(plan.getSubscripcionesSinAdjudicacion().isEmpty());
+	}
 }
