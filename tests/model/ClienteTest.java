@@ -29,6 +29,7 @@ public class ClienteTest {
 		assertEquals(cliente.getEmail(), "ale@gmail.com");
 		assertEquals(cliente.getFechaDeNacimiento(), LocalDate.of(1985, 1, 1));
 		assertEquals(cliente.getFechaDeIngreso(), LocalDate.of(2015, 12, 1));
+		assertEquals(cliente.getEdad(), 31, 0);
 	}
 
 }

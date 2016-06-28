@@ -47,8 +47,8 @@ public class PlanDeAhorro {
 		return subscripciones;
 	}
 
-	public void agregarSubscripcion(Cliente cliente) {
-		this.subscripciones.add(new Subscripcion(cliente));
+	public void agregarSubscripcion(Subscripcion subscripcion) {
+		this.subscripciones.add(subscripcion);
 	}
 
 	public Subscripcion adjudicar() throws SinAdjudicableException {
@@ -57,5 +57,17 @@ public class PlanDeAhorro {
 
 	public List<Subscripcion> getSubscripcionesSinAdjudicacion() {
 		return subscripciones.stream().filter(s -> !s.estaAdjudicada()).collect(Collectors.toList());
+	}
+
+	public float getAlicuota() {
+		return this.financiamiento.getAlicouta(this);
+	}
+
+	public float getGastosAdministrativos() {
+		return 0;
+	}
+
+	public float getSeguroDeVida() {
+		return 0;
 	}
 }

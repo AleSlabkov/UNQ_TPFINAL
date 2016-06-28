@@ -6,32 +6,32 @@ import java.util.Random;
 
 public class Sorteo implements IAdjudicacion {
 
-	private Random rnd;
-	
-	public Sorteo(Random rnd) {
-		this.rnd = rnd;
+	private Random random;
+
+	public Sorteo(Random random) {
+		this.random = random;
 	}
 
 	@Override
-	public Subscripcion adjudicar(PlanDeAhorro plan) throws SinAdjudicableException {
-		
-		//obtengo subscripciones sin adjudicar
-		List<Subscripcion> subs = plan.getSubscripcionesSinAdjudicacion();
-		
-		if(subs.isEmpty())
-			throw new SinAdjudicableException();
-		
-		//uso el random
-		Integer number = rnd.nextInt(subs.size());
-		
-		//obtengo la subscripcion a adjudicar
-		Subscripcion su = subs.get(number);
-		
-		//registro adjudicacion
-		su.registrarAdjudicacion(LocalDate.now());
-		
-		return su;
-		
-	}
+	public Subscripcion adjudicar(PlanDeAhorro plan)
+			throws SinAdjudicableException {
 
+		// obtengo subscripciones sin adjudicar
+		List<Subscripcion> subscripciones = plan
+				.getSubscripcionesSinAdjudicacion();
+
+		if (subscripciones.isEmpty())
+			throw new SinAdjudicableException();
+
+		// uso el random
+		Integer number = random.nextInt(subscripciones.size());
+
+		// obtengo la subscripcion a adjudicar
+		Subscripcion subscripcion = subscripciones.get(number);
+
+		// registro adjudicacion
+		subscripcion.registrarAdjudicacion(LocalDate.now());
+
+		return subscripcion;
+	}
 }

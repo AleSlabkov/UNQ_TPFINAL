@@ -1,18 +1,18 @@
 package model;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class SorteoTest {
+public class AdjudicacionSorteoTest {
 
 	private Sorteo sorteo;
 	private Random rndMock;
@@ -25,6 +25,10 @@ public class SorteoTest {
 		sorteo = new Sorteo(rndMock);
 	}
 
+	/**
+	 * @throws SinAdjudicableException
+	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void adjudicar() throws SinAdjudicableException {
 		
@@ -44,6 +48,10 @@ public class SorteoTest {
 		verify(rndMock).nextInt(3);
 		
 	}
+	
+	/**
+	 * @throws SinAdjudicableException
+	 */
 	@Test(expected = SinAdjudicableException.class)
 	public void adjudicarSinAdjudicacionesDisponibles() throws SinAdjudicableException {
 	

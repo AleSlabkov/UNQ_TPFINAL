@@ -1,5 +1,4 @@
-* stock planta, esta bien que cada uno tenga su stock o se comparten las instancias? = se comparten instancias
-* que hacer cuando se adjudica un modelo? se pide el modelo a la fabrica o a la planta? y el stock?
-* cómo muestro en el diagrama el ejemplo: un modelo tiene varias plantas de produccion y una planta produce varios modelos? 
-* un modelo se puede producir en diferentes plantas = si
-* precio base o en version? = precio base / simplificar
+* la subscripción tiene que conocer al plan de ahorro?
+* new ComprobanteDePago en clase Suscripción al registrar pago o generador de Pagos?	
+* ver el tema del seguro de vida. Va en la concesionaria? y el planDeAhorro conoce la concesionaria?
+* gastos administrativos en el plan de Ahorro?

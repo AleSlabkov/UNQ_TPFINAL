@@ -31,24 +31,26 @@ public class PlanDeAhorroTest {
 	 */
 	@Test
 	public void crearPlanTest() {
+		assertEquals(plan.getNumeroGrupo(), 1, 0);
 		assertEquals(plan.getModelo().getNombre(), modelo.getNombre());
 		assertEquals(plan.getCantidadDeCoutas(), (Integer) 84);
 	}
 
 	/**
-	 * Test el agregado de suscripciones al plan de ahorro
+	 * Testea el agregado de suscripciones al plan de ahorro
 	 */
 	@Test
 	public void agregarSuscripcionesTest() {
 		plan.agregarSubscripcion(subscripcion1);
 		plan.agregarSubscripcion(subscripcion2);
 		
-
 		assertEquals(plan.getSubscripciones().size(), 2);
+		assertTrue(plan.getSubscripciones().contains(subscripcion1));
+		assertTrue(plan.getSubscripciones().contains(subscripcion2));
 	}
 
 	/**
-	 * Testea la obtención de subscripciones sin adjudicacion
+	 * Testea la obtención de la lista de subscripciones sin adjudicacion
 	 */
 	@Test
 	public void getSubscripcionesSinAdjudicacionTest() {
@@ -59,13 +61,15 @@ public class PlanDeAhorroTest {
 		plan.agregarSubscripcion(subscripcion2);
 
 		assertEquals(plan.getSubscripcionesSinAdjudicacion().size(), 1);
+		assertTrue(plan.getSubscripcionesSinAdjudicacion().contains(subscripcion2));
+		assertFalse(plan.getSubscripcionesSinAdjudicacion().contains(subscripcion1));
 	}
 	
 	/**
-	 * Testea la obtención de subscripciones sin adjudicacion en un plan completamente adjudicado
+	 * Testea la obtención de la lista de subscripciones sin adjudicacion en un plan completamente adjudicado
 	 */
 	@Test
-	public void getSubscripcionesSinAdjudicacionFail() {
+	public void getSubscripcionesSinAdjudicacionEmpty() {
 		
 		when(subscripcion1.estaAdjudicada()).thenReturn(true);
 		when(subscripcion2.estaAdjudicada()).thenReturn(true);

@@ -51,4 +51,8 @@ public class Cliente {
 		return fechaDeIngreso;
 	}
 
+	public Integer getEdad() {
+		return LocalDate.now().compareTo(this.fechaDeNacimiento);
+	}
+
 }

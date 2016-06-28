@@ -69,70 +69,70 @@ public class ConcesionarioTest {
 	/**
 	 * 
 	 */
-	@Test
-	public void getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDescTest() {
+//	@Test
+//	public void getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDescTest() {
+//
+//		registrarClientes();
+//		registrarPlanes();
+//
+//		// TOMO PLAN 10 Y 20 PARA AGREGARLE MAS SUBSCRIPTORES
+//
+//		concesionario.getPlanAhorroByNumeroGrupo(10).get()
+//				.agregarSubscripcion(concesionario.getClientes().get(20));
+//		concesionario.getPlanAhorroByNumeroGrupo(10).get()
+//				.agregarSubscripcion(concesionario.getClientes().get(21));
+//		concesionario.getPlanAhorroByNumeroGrupo(10).get()
+//				.agregarSubscripcion(concesionario.getClientes().get(22));
+//
+//		concesionario.getPlanAhorroByNumeroGrupo(20).get()
+//				.agregarSubscripcion(concesionario.getClientes().get(20));
+//		concesionario.getPlanAhorroByNumeroGrupo(20).get()
+//				.agregarSubscripcion(concesionario.getClientes().get(21));
+//
+//		List<PlanDeAhorro> planes = concesionario
+//				.getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDesc();
+//
+//		assertEquals(planes.size(), 10);
+//		assertEquals(planes.get(0).getSubscripciones().size(), 13);
+//		assertEquals(planes.get(1).getSubscripciones().size(), 12);
+//		assertEquals(planes.get(9).getSubscripciones().size(), 10);
+//
+//	}
 
-		registrarClientes();
-		registrarPlanes();
-
-		// TOMO PLAN 10 Y 20 PARA AGREGARLE MAS SUBSCRIPTORES
-
-		concesionario.getPlanAhorroByNumeroGrupo(10).get()
-				.agregarSubscripcion(concesionario.getClientes().get(20));
-		concesionario.getPlanAhorroByNumeroGrupo(10).get()
-				.agregarSubscripcion(concesionario.getClientes().get(21));
-		concesionario.getPlanAhorroByNumeroGrupo(10).get()
-				.agregarSubscripcion(concesionario.getClientes().get(22));
-
-		concesionario.getPlanAhorroByNumeroGrupo(20).get()
-				.agregarSubscripcion(concesionario.getClientes().get(20));
-		concesionario.getPlanAhorroByNumeroGrupo(20).get()
-				.agregarSubscripcion(concesionario.getClientes().get(21));
-
-		List<PlanDeAhorro> planes = concesionario
-				.getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDesc();
-
-		assertEquals(planes.size(), 10);
-		assertEquals(planes.get(0).getSubscripciones().size(), 13);
-		assertEquals(planes.get(1).getSubscripciones().size(), 12);
-		assertEquals(planes.get(9).getSubscripciones().size(), 10);
-
-	}
-
-	/**
-	 * 
-	 */
-	private void registrarPlanes() {
-		// GENERO 100 PLANES CON 10 SUBSCRIPCIONES CADA UNO
-		for (int i = 0; i < 100; i++) {
-			PlanDeAhorro plan = new PlanDeAhorro(i + 1, new Modelo("Gol Trend",
-					5, LocalDate.of(2015, 1, 1), false, 120000), 84, null, null);
-
-			for (int cliente = 0; cliente < 10; cliente++)
-				plan.agregarSubscripcion(concesionario.getClientes().get(
-						cliente));
-
-			concesionario.agregarPlanAhorro(plan);
-
-		}
-	}
-
-	/**
-	 * 
-	 */
-	private void registrarClientes() {
-		// GENERO 1000 CLIENTES AL CONCECIONARIO
-		for (int i = 0; i < 1000; i++) {
-
-			concesionario.agregarCliente(new Cliente(String.format(
-					"Nombre_%1$s", i), String.format("Apellido_%d", i), String
-					.format("Nombre_%d", i), String.format("dirrecion_%d", i),
-					String.format("email%d@gmail.com", i), LocalDate.of(1980,
-							1, 1).plusDays(i), LocalDate.of(2015, 1, 1)
-							.plusDays(i)));
-
-		}
-	}
+//	/**
+//	 * 
+//	 */
+//	private void registrarPlanes() {
+//		// GENERO 100 PLANES CON 10 SUBSCRIPCIONES CADA UNO
+//		for (int i = 0; i < 100; i++) {
+//			PlanDeAhorro plan = new PlanDeAhorro(i + 1, new Modelo("Gol Trend",
+//					5, LocalDate.of(2015, 1, 1), false, 120000), 84, null, null);
+//
+//			for (int cliente = 0; cliente < 10; cliente++)
+//				plan.agregarSubscripcion(concesionario.getClientes().get(
+//						cliente));
+//
+//			concesionario.agregarPlanAhorro(plan);
+//
+//		}
+//	}
+//
+//	/**
+//	 * 
+//	 */
+//	private void registrarClientes() {
+//		// GENERO 1000 CLIENTES AL CONCECIONARIO
+//		for (int i = 0; i < 1000; i++) {
+//
+//			concesionario.agregarCliente(new Cliente(String.format(
+//					"Nombre_%1$s", i), String.format("Apellido_%d", i), String
+//					.format("Nombre_%d", i), String.format("dirrecion_%d", i),
+//					String.format("email%d@gmail.com", i), LocalDate.of(1980,
+//							1, 1).plusDays(i), LocalDate.of(2015, 1, 1)
+//							.plusDays(i)));
+//
+//		}
+//	}
 
 	/**
 	 * Testea el stock del concesionario en base a una fabrica con una planta de producción
