@@ -23,7 +23,7 @@ public class SubscripcionTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(cliente.getEmail()).thenReturn("pepe@pepe.com");
-		when(planDeAhorro.getCantidadDeCoutas()).thenReturn(84);
+		when(planDeAhorro.getCantidadDeCuotas()).thenReturn(84);
 		this.subscripcion = new Subscripcion(cliente);
 	}
 
@@ -74,7 +74,7 @@ public class SubscripcionTest {
 	@Test(expected = PlanCompletamentoPagoException.class)
 	public void registrarPagoEnPlanCompleto() throws PlanCompletamentoPagoException {
 		PlanDeAhorro planMock = mock(PlanDeAhorro.class);
-		when(planMock.getCantidadDeCoutas()).thenReturn(1);
+		when(planMock.getCantidadDeCuotas()).thenReturn(1);
 		
 		subscripcion.registrarPago(planMock, LocalDate.of(2016, 5, 10));
 		subscripcion.registrarPago(planMock, LocalDate.of(2016, 6, 10));

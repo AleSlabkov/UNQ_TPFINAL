@@ -43,7 +43,7 @@ public class Subscripcion {
 
 	public float getProporcionDePago(PlanDeAhorro planDeAhorro) {
 		return (float) this.pagos.size()
-				/ (float) planDeAhorro.getCantidadDeCoutas();
+				/ (float) planDeAhorro.getCantidadDeCuotas();
 	}
 
 	public void registrarAdjudicacion(LocalDate fecha) {
@@ -55,7 +55,7 @@ public class Subscripcion {
 	}
 	
 	private boolean completoPago(PlanDeAhorro planDeAhorro) {
-		return planDeAhorro.getCantidadDeCoutas() == this.pagos.size();
+		return planDeAhorro.getCantidadDeCuotas() == this.pagos.size();
 	}
 
 	private Integer getNuevoNumerodeCuota() {

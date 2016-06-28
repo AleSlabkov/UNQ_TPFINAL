@@ -33,7 +33,7 @@ public class PlanDeAhorroTest {
 	public void crearPlanTest() {
 		assertEquals(plan.getNumeroGrupo(), 1, 0);
 		assertEquals(plan.getModelo().getNombre(), modelo.getNombre());
-		assertEquals(plan.getCantidadDeCoutas(), (Integer) 84);
+		assertEquals(plan.getCantidadDeCuotas(), (Integer) 84);
 	}
 
 	/**

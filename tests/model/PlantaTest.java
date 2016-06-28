@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 
@@ -57,6 +58,7 @@ public class PlantaTest {
 		planta.producirModelo(modelo, 2000);
 
 		assertEquals(planta.getCantidadByModelo(modelo), (Integer) 3000);
+		assertEquals(planta.getCantidadByModelo(mock(Modelo.class)), (Integer) 0);
 	}
 	
 	/**
@@ -89,5 +91,21 @@ public class PlantaTest {
 		planta.liberarStockModelo(modelo, 5000);
 		
 		assertEquals(planta.getCantidadByModelo(modelo), (Integer) 15000);
+	}
+	
+	/**
+	 * Testea la desubscripcion de un observer a un observable
+	 **/
+	@Test
+	public void desusbcribirCambiosStock(){
+		
+		IStockObserver observer = mock(IStockObserver.class);
+		
+		planta.subscribirCambiosStock(observer);
+		planta.desusbcribirCambiosStock(observer);
+		
+		planta.informarNuevoStock(null, null);
+		
+		verify(observer, Mockito.times(0)).aumentarStock(any(), any(), any());
 	}
 }

@@ -2,6 +2,8 @@ package model;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import com.sun.xml.internal.ws.policy.AssertionSet;
 
 public class ConcesionarioTest {
 
@@ -66,73 +70,55 @@ public class ConcesionarioTest {
 		assertEquals(concesionario.getPlanesDeAhorro().get(0), planDeAhorro);
 	}
 
+	@Test
+	public void getPlanAhorroByNumeroGrupoTest(){
+		
+		PlanDeAhorro plan3 = mock(PlanDeAhorro.class);
+		when(plan3.getNumeroGrupo()).thenReturn(30);
+		
+		concesionario.agregarPlanAhorro(plan3);
+		
+		assertEquals(concesionario.getPlanAhorroByNumeroGrupo(30).get().getNumeroGrupo().intValue(), 30);
+
+		
+	}
+	
 	/**
 	 * 
 	 */
-//	@Test
-//	public void getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDescTest() {
-//
-//		registrarClientes();
-//		registrarPlanes();
-//
-//		// TOMO PLAN 10 Y 20 PARA AGREGARLE MAS SUBSCRIPTORES
-//
-//		concesionario.getPlanAhorroByNumeroGrupo(10).get()
-//				.agregarSubscripcion(concesionario.getClientes().get(20));
-//		concesionario.getPlanAhorroByNumeroGrupo(10).get()
-//				.agregarSubscripcion(concesionario.getClientes().get(21));
-//		concesionario.getPlanAhorroByNumeroGrupo(10).get()
-//				.agregarSubscripcion(concesionario.getClientes().get(22));
-//
-//		concesionario.getPlanAhorroByNumeroGrupo(20).get()
-//				.agregarSubscripcion(concesionario.getClientes().get(20));
-//		concesionario.getPlanAhorroByNumeroGrupo(20).get()
-//				.agregarSubscripcion(concesionario.getClientes().get(21));
-//
-//		List<PlanDeAhorro> planes = concesionario
-//				.getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDesc();
-//
-//		assertEquals(planes.size(), 10);
-//		assertEquals(planes.get(0).getSubscripciones().size(), 13);
-//		assertEquals(planes.get(1).getSubscripciones().size(), 12);
-//		assertEquals(planes.get(9).getSubscripciones().size(), 10);
-//
-//	}
+	@Test
+	public void getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDescTest() {
 
-//	/**
-//	 * 
-//	 */
-//	private void registrarPlanes() {
-//		// GENERO 100 PLANES CON 10 SUBSCRIPCIONES CADA UNO
-//		for (int i = 0; i < 100; i++) {
-//			PlanDeAhorro plan = new PlanDeAhorro(i + 1, new Modelo("Gol Trend",
-//					5, LocalDate.of(2015, 1, 1), false, 120000), 84, null, null);
-//
-//			for (int cliente = 0; cliente < 10; cliente++)
-//				plan.agregarSubscripcion(concesionario.getClientes().get(
-//						cliente));
-//
-//			concesionario.agregarPlanAhorro(plan);
-//
-//		}
-//	}
-//
-//	/**
-//	 * 
-//	 */
-//	private void registrarClientes() {
-//		// GENERO 1000 CLIENTES AL CONCECIONARIO
-//		for (int i = 0; i < 1000; i++) {
-//
-//			concesionario.agregarCliente(new Cliente(String.format(
-//					"Nombre_%1$s", i), String.format("Apellido_%d", i), String
-//					.format("Nombre_%d", i), String.format("dirrecion_%d", i),
-//					String.format("email%d@gmail.com", i), LocalDate.of(1980,
-//							1, 1).plusDays(i), LocalDate.of(2015, 1, 1)
-//							.plusDays(i)));
-//
-//		}
-//	}
+		PlanDeAhorro plan1 = mock(PlanDeAhorro.class);
+		List<Subscripcion> plan1Sub = mock(List.class);
+		when(plan1Sub.size()).thenReturn(20);
+		
+		PlanDeAhorro plan2 = mock(PlanDeAhorro.class);
+		List<Subscripcion> plan2Sub = mock(List.class);
+		when(plan2Sub.size()).thenReturn(10);
+		
+		PlanDeAhorro plan3 = mock(PlanDeAhorro.class);
+		List<Subscripcion> plan3Sub = mock(List.class);
+		when(plan3Sub.size()).thenReturn(30);
+		
+		when(plan1.getSubscripciones()).thenReturn(plan1Sub);
+		when(plan2.getSubscripciones()).thenReturn(plan2Sub);
+		when(plan3.getSubscripciones()).thenReturn(plan3Sub);
+		
+		concesionario.agregarPlanAhorro(plan1);
+		concesionario.agregarPlanAhorro(plan2);
+		concesionario.agregarPlanAhorro(plan3);
+
+		List<PlanDeAhorro> planes = concesionario.getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDesc();
+
+		assertEquals(planes.size(), 3);
+		assertEquals(planes.get(0).getSubscripciones().size(), 30);
+		assertEquals(planes.get(1).getSubscripciones().size(), 20);
+		assertEquals(planes.get(2).getSubscripciones().size(), 10);
+
+	}
+
+
 
 	/**
 	 * Testea el stock del concesionario en base a una fabrica con una planta de producción

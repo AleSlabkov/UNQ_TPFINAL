@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class PlanDeAhorro {
 		return modelo;
 	}
 
-	public Integer getCantidadDeCoutas() {
+	public Integer getCantidadDeCuotas() {
 		return cantidadDeCoutas;
 	}
 
@@ -52,7 +53,12 @@ public class PlanDeAhorro {
 	}
 
 	public Subscripcion adjudicar() throws SinAdjudicableException {
-		return this.tipoAdjudicacion.adjudicar(this);
+		
+		Subscripcion subscripcion = this.tipoAdjudicacion.adjudicar(this);
+		
+		subscripcion.registrarAdjudicacion(LocalDate.now());
+		
+		return subscripcion;
 	}
 
 	public List<Subscripcion> getSubscripcionesSinAdjudicacion() {

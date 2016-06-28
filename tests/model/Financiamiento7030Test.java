@@ -18,7 +18,7 @@ public class Financiamiento7030Test {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(planDeAhorro.getCantidadDeCoutas()).thenReturn(84);
+		when(planDeAhorro.getCantidadDeCuotas()).thenReturn(84);
 		when(planDeAhorro.getModelo()).thenReturn(modelo);
 		when(modelo.getPrecio()).thenReturn(350000f);
 	}

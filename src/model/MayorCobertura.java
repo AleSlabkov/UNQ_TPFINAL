@@ -12,8 +12,7 @@ public class MayorCobertura implements IAdjudicacion {
 			throws SinAdjudicableException {
 
 		// obtengo subscripciones sin adjudicar
-		List<Subscripcion> subscripcionesSinAdjudicacion = plan
-				.getSubscripcionesSinAdjudicacion();
+		List<Subscripcion> subscripcionesSinAdjudicacion = plan.getSubscripcionesSinAdjudicacion();
 
 		if (subscripcionesSinAdjudicacion.isEmpty())
 			throw new SinAdjudicableException();
@@ -22,13 +21,19 @@ public class MayorCobertura implements IAdjudicacion {
 
 		Subscripcion subscripcion;
 
-		if (adjudicables.size() == 1) {
+		if (adjudicables.size() == 1) 
+		{
 			subscripcion = adjudicables.get(0);
-		} else {
+		} 
+		else 
+		{
 			adjudicables = getAdjudicablesPorFechaDeIngreso(plan, adjudicables);
-			if (adjudicables.size() == 1) {
+			if (adjudicables.size() == 1) 
+			{
 				subscripcion = adjudicables.get(0);
-			} else {
+			} 
+			else 
+			{
 				adjudicables = getAdjudicablesPorFechaDeSubscripcion(plan, adjudicables);
 				subscripcion = adjudicables.get(0);
 			}
@@ -44,6 +49,7 @@ public class MayorCobertura implements IAdjudicacion {
 	 */
 	private List<Subscripcion> getAdjudicablesPorMayorCobertura(
 			PlanDeAhorro plan, List<Subscripcion> subscripcionesSinAdjudicacion) {
+		
 		float mayorCobertura = subscripcionesSinAdjudicacion.stream()
 				.map(s -> s.getProporcionDePago(plan))
 				.sorted(Comparator.reverseOrder()).collect(Collectors.toList())
@@ -74,7 +80,7 @@ public class MayorCobertura implements IAdjudicacion {
 				.get(0);
 		
 		return subscripcionesSinAdjudicacion.stream()
-				.filter(s -> s.getCliente().getFechaDeIngreso().isEqual(primerInscripcion))
+				.filter(s -> s.getFechaSubscripcion().isEqual(primerInscripcion))
 				.collect(Collectors.toList());
 	}
 }

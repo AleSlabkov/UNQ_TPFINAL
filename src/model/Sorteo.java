@@ -29,9 +29,6 @@ public class Sorteo implements IAdjudicacion {
 		// obtengo la subscripcion a adjudicar
 		Subscripcion subscripcion = subscripciones.get(number);
 
-		// registro adjudicacion
-		subscripcion.registrarAdjudicacion(LocalDate.now());
-
 		return subscripcion;
 	}
 }

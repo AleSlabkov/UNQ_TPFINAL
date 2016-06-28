@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Planta implements ICambioStock {
 
@@ -66,8 +67,10 @@ public class Planta implements ICambioStock {
 	}
 
 	public Integer getCantidadByModelo(Modelo modelo) {
-		return this.stock.stream().filter(s -> s.getModelo() == modelo)
-				.findFirst().get().getCantidad();
+		 Optional<StockModelo> op = this.stock.stream().filter(s -> s.getModelo() == modelo).findFirst();
+		 
+		 return op.isPresent() ? op.get().getCantidad() : 0;
+				
 	}
 
 	@Override

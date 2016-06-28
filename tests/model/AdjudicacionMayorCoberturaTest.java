@@ -75,6 +75,7 @@ public class AdjudicacionMayorCoberturaTest {
 	 */
 	@Test
 	public void adjudicarPorAntiguedadDeSubscripcion() throws SinAdjudicableException {
+		
 		Subscripcion subscripcion1 = mock(Subscripcion.class);
 		Cliente cliente1 = mock(Cliente.class);
 		when(subscripcion1.getProporcionDePago(planDeAhorro)).thenReturn(0.2f);
