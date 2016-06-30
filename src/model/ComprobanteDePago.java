@@ -20,7 +20,7 @@ public class ComprobanteDePago {
 		this.seguroDeVida = seguroDeVida;
 	}
 
-	public Integer getNumeroDeCouta() {
+	public Integer getNumeroDeCuota() {
 		return numeroDeCouta;
 	}
 	

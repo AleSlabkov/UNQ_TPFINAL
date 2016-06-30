@@ -1,30 +1,17 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
-import static org.mockito.Mockito.*;
-import org.mockito.MockitoAnnotations;
 
 public class AseguradoraTest {
-
-	@Mock
-	PlanDeAhorro planDeAhorro;
-	@Mock
-	Modelo modelo;
-	@Mock
-	Subscripcion subscripcion;
-	@Mock
-	Cliente cliente;
+	
+	private Aseguradora seguro;
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		when(planDeAhorro.getModelo()).thenReturn(modelo);
-		when(modelo.getPrecio()).thenReturn(350000f);
-		when(subscripcion.getCliente()).thenReturn(cliente);
+		seguro = new Aseguradora();
 	}
 
 	/**
@@ -32,11 +19,8 @@ public class AseguradoraTest {
 	 */
 	@Test
 	public void clienteMenorDe50() {
-		Aseguradora seguro = new Aseguradora();
-		when(cliente.getEdad()).thenReturn(30);
-
-		assertEquals(seguro.calcularValorDelSeguro(planDeAhorro, subscripcion),
-				17550f, 0);
+		assertEquals(seguro.calcularValorDelSeguro(30, 1000f),
+				100f, 0);
 	}
 
 	/**
@@ -44,11 +28,8 @@ public class AseguradoraTest {
 	 */
 	@Test
 	public void clienteMayotDe50() {
-		Aseguradora seguro = new Aseguradora();
-		when(cliente.getEdad()).thenReturn(65);
-
-		assertEquals(seguro.calcularValorDelSeguro(planDeAhorro, subscripcion),
-				17560f, 0);
+		assertEquals(seguro.calcularValorDelSeguro(65, 1000f),
+				250f, 0);
 	}
 
 }

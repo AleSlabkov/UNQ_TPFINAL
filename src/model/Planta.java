@@ -7,14 +7,16 @@ import java.util.Optional;
 public class Planta implements ICambioStock {
 
 	private String nombre;
+	private String direccion;
 	private Fabrica fabrica;
 	private List<Modelo> modelosProducidos;
 	private List<StockModelo> stock;
 	private List<IStockObserver> stockObservers;
 
-	public Planta(String nombre, Fabrica f) {
-		this.fabrica = f;
+	public Planta(String nombre, String direccion, Fabrica fabrica) {
+		this.fabrica = fabrica;
 		this.nombre = nombre;
+		this.direccion = direccion;
 		this.modelosProducidos = new ArrayList<Modelo>();
 		this.stock = new ArrayList<StockModelo>();
 		this.stockObservers = new ArrayList<IStockObserver>();
@@ -22,6 +24,10 @@ public class Planta implements ICambioStock {
 
 	public String getNombre() {
 		return nombre;
+	}
+	
+	public String getDireccion() {
+		return this.direccion;
 	}
 
 	public Fabrica getFabrica() {

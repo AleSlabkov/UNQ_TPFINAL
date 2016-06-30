@@ -1,10 +1,11 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -12,13 +13,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.sun.xml.internal.ws.policy.AssertionSet;
-
 public class ConcesionarioTest {
 
 	private Concesionario concesionario;
 	@Mock
 	private Fabrica fabrica;
+	@Mock
+	private IAseguradoraDePlanes aseguradora;
 	@Mock
 	private Cliente cliente;
 	@Mock
@@ -33,7 +34,7 @@ public class ConcesionarioTest {
 		MockitoAnnotations.initMocks(this);
 		
 		concesionario = new Concesionario("Guido Guidi",
-				"Zapiola 232, Quilmes, Buenos Aires, Argentina", fabrica);
+				"Zapiola 232, Quilmes, Buenos Aires, Argentina", fabrica, aseguradora);
 
 	}
 
@@ -46,6 +47,7 @@ public class ConcesionarioTest {
 		assertEquals(concesionario.getDireccion(),
 				"Zapiola 232, Quilmes, Buenos Aires, Argentina");
 		assertEquals(concesionario.getFabrica(), fabrica);
+		assertEquals(concesionario.getAseguradora(), aseguradora);
 	}
 
 	/**
@@ -86,6 +88,7 @@ public class ConcesionarioTest {
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDescTest() {
 
@@ -119,7 +122,6 @@ public class ConcesionarioTest {
 	}
 
 
-
 	/**
 	 * Testea el stock del concesionario en base a una fabrica con una planta de producción
 	 */
@@ -129,7 +131,7 @@ public class ConcesionarioTest {
 		Fabrica fabrica = new Fabrica("VolksWagen");
 		fabrica.subscribirCambiosStock(concesionario);
 			
-		Planta planta = new Planta("Planta1", fabrica);
+		Planta planta = new Planta("Planta1", null, fabrica);
 		planta.subscribirCambiosStock(fabrica);
 		planta.producirModelo(golTrend, 30000);
 		planta.producirModelo(vento, 10000);	
@@ -147,12 +149,12 @@ public class ConcesionarioTest {
 		Fabrica fabrica = new Fabrica("VolksWagen");
 		fabrica.subscribirCambiosStock(concesionario);
 		
-		Planta planta1 = new Planta("Planta1", fabrica);
+		Planta planta1 = new Planta("Planta1", null, fabrica);
 		planta1.subscribirCambiosStock(fabrica);
 		planta1.producirModelo(golTrend, 30000);
 		planta1.producirModelo(vento, 10000);
 		
-		Planta planta2 = new Planta("Planta2", fabrica);
+		Planta planta2 = new Planta("Planta2", null, fabrica);
 		planta2.subscribirCambiosStock(fabrica);
 		planta2.producirModelo(golTrend, 20000);
 		planta2.producirModelo(vento, 10000);	
@@ -171,12 +173,12 @@ public class ConcesionarioTest {
 		Fabrica fabrica = new Fabrica("VolksWagen");
 		fabrica.subscribirCambiosStock(concesionario);
 		
-		Planta planta1 = new Planta("Planta1", fabrica);
+		Planta planta1 = new Planta("Planta1", null, fabrica);
 		planta1.subscribirCambiosStock(fabrica);
 		planta1.producirModelo(golTrend, 30000);
 		planta1.producirModelo(vento, 10000);
 		
-		Planta planta2 = new Planta("Planta2", fabrica);
+		Planta planta2 = new Planta("Planta2", null, fabrica);
 		planta2.subscribirCambiosStock(fabrica);
 		planta2.producirModelo(golTrend, 20000);
 		planta2.producirModelo(vento, 10000);	
@@ -187,5 +189,43 @@ public class ConcesionarioTest {
 		assertEquals(concesionario.getStockByModelo(golTrend), 49500);
 		assertEquals(concesionario.getStockByModelo(vento), 19000); 
 	}
-
+	
+	/**
+	 * Testea la obtención de la planta más cercana al concesionario
+	 */
+	@Test
+	public void getPlantaDeProduccionMasCercana()
+	{
+		Planta planta1 = mock(Planta.class);
+		Planta planta2 = mock(Planta.class);
+		
+		List<Planta> plantas = new ArrayList<Planta>(Arrays.asList(planta1, planta2));
+		when(fabrica.getPlantasByModelo(golTrend)).thenReturn(plantas);
+		
+		IGoogleMaps maps = mock(IGoogleMaps.class);
+		when(maps.getDistancia(fabrica.getDireccion(), planta1.getDireccion())).thenReturn(600f);
+		when(maps.getDistancia(fabrica.getDireccion(), planta1.getDireccion())).thenReturn(1000f);
+		
+		assertEquals(concesionario.getPlantaMasCercanaByModelo(golTrend, maps), planta1);
+	}
+	
+	/**
+	 * @throws ConcesionarioSinGastosAdministrativosException
+	 */
+	@Test
+	public void cambiarGastosAdministrativosTest() throws ConcesionarioSinGastosAdministrativosException
+	{
+		concesionario.modificarValorGastosAdministrativos(1000f);
+		
+		assertEquals(concesionario.getGastosAdministrativos(), 1000f, 0); 
+	}
+	
+	/**
+	 * @throws ConcesionarioSinGastosAdministrativosException
+	 */
+	@Test (expected = ConcesionarioSinGastosAdministrativosException.class)
+	public void cambiarGastosAdministrativosConExceptionTest() throws ConcesionarioSinGastosAdministrativosException
+	{		
+		concesionario.getGastosAdministrativos(); 
+	}
 }

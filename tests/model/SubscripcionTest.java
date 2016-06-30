@@ -17,6 +17,8 @@ public class SubscripcionTest {
 	private Cliente cliente;
 	@Mock
 	private PlanDeAhorro planDeAhorro;
+	@Mock
+	private ComprobanteDePago comprobanteDePago;
 	private Subscripcion subscripcion;
 
 	@Before
@@ -31,7 +33,7 @@ public class SubscripcionTest {
 	 * Crea una subscripcion y testea el acceso a sus colaboradores
 	 */
 	@Test
-	public void crearClienteTest() {
+	public void crearSubscripcionTest() {
 		assertEquals(subscripcion.getCliente(), cliente);
 		assertEquals(subscripcion.getProporcionDePago(planDeAhorro), 0f, 0);
 		assertTrue(subscripcion.getFechaSubscripcion().isEqual(LocalDate.now()));
@@ -40,44 +42,28 @@ public class SubscripcionTest {
 
 	/**
 	 * Testea registrar dos pagos y comprueba el número consecutivo de cuotas
-	 * @throws PlanCompletamentoPagoException
+	 * @throws PlanCompletamentePagoException
 	 */
 	@Test
-	public void registrarPagosTest() throws PlanCompletamentoPagoException{
-		subscripcion.registrarPago(planDeAhorro, LocalDate.of(2016, 5, 10));
-		subscripcion.registrarPago(planDeAhorro, LocalDate.of(2016, 6, 10));
+	public void registrarPagosTest() {
 		
-		assertEquals(subscripcion.getPagos().get(0).getNumeroDeCouta(), 1, 0);
-		assertEquals(subscripcion.getPagos().get(1).getNumeroDeCouta(), 2, 0);
+		subscripcion.registrarPago(comprobanteDePago);
+		
+		assertTrue(subscripcion.getPagos().contains(comprobanteDePago));
 	}
 	
 	/**
 	 * Registra pagos y testea la proporción de pago
 	 * 
-	 * @throws PlanCompletamentoPagoException
+	 * @throws PlanCompletamentePagoException
 	 */
 	@Test
-	public void registrarPagoVerificandoProporcionTest()
-			throws PlanCompletamentoPagoException {
-		subscripcion.registrarPago(planDeAhorro, LocalDate.of(2016, 5, 10));
-		subscripcion.registrarPago(planDeAhorro, LocalDate.of(2016, 6, 10));
+	public void registrarPagoVerificandoProporcionTest() {
+		subscripcion.registrarPago(comprobanteDePago);
+		subscripcion.registrarPago(comprobanteDePago);
 
 		assertEquals(subscripcion.getProporcionDePago(planDeAhorro), 0.023f,
 				0.001);
-	}
-
-	/**
-	 * Espera una excepción debido a la intención de registrar un pago en un
-	 * plan que se encuentra completamente pago
-	 * @throws PlanCompletamentoPagoException 
-	 */
-	@Test(expected = PlanCompletamentoPagoException.class)
-	public void registrarPagoEnPlanCompleto() throws PlanCompletamentoPagoException {
-		PlanDeAhorro planMock = mock(PlanDeAhorro.class);
-		when(planMock.getCantidadDeCuotas()).thenReturn(1);
-		
-		subscripcion.registrarPago(planMock, LocalDate.of(2016, 5, 10));
-		subscripcion.registrarPago(planMock, LocalDate.of(2016, 6, 10));
 	}
 
 	/**
@@ -85,7 +71,8 @@ public class SubscripcionTest {
 	 */
 	@Test
 	public void registrarAdjudicacionTest() {
-		subscripcion.registrarAdjudicacion(LocalDate.of(2016, 6, 1));
+		CuponDeAdjudicacion cuponDeAdjudicacion = mock(CuponDeAdjudicacion.class);
+		subscripcion.registrarAdjudicacion(cuponDeAdjudicacion);
 
 		assertTrue(subscripcion.estaAdjudicada());
 	}

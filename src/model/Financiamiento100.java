@@ -7,4 +7,9 @@ public class Financiamiento100 implements IFinanciamiento {
 		return planDeAhoro.getModelo().getPrecio() / planDeAhoro.getCantidadDeCuotas();
 	}
 
+	@Override
+	public float getCostoNoFinanciado(PlanDeAhorro planDeAhoro) {
+		return 0;
+	}
+
 }

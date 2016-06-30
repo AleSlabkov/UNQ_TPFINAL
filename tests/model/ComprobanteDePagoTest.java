@@ -20,7 +20,7 @@ public class ComprobanteDePagoTest {
 	public void crearComprobanteDePago() {
 		ComprobanteDePago comprobante = new ComprobanteDePago(1, LocalDate.now(), 3500f, 130f, 80f);
 		
-		assertEquals(comprobante.getNumeroDeCouta(), 1, 0);
+		assertEquals(comprobante.getNumeroDeCuota(), 1, 0);
 		assertEquals(comprobante.getAlicuota(), 3500f, 0);
 		assertEquals(comprobante.getGastosAdministrativos(), 130f, 0);
 		assertEquals(comprobante.getSeguroDeVida(), 80f, 0);

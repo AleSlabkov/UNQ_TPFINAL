@@ -1,4 +1,5 @@
-* la subscripción tiene que conocer al plan de ahorro?
-* new ComprobanteDePago en clase Suscripción al registrar pago o generador de Pagos?	
-* ver el tema del seguro de vida. Va en la concesionaria? y el planDeAhorro conoce la concesionaria?
-* gastos administrativos en el plan de Ahorro?
+* la subscripción tiene que conocer al plan de ahorro? NO
+* new ComprobanteDePago en clase Suscripción al registrar pago o generador de Pagos? LISTO
+* ver el tema del seguro de vida. Va en la concesionaria? y el planDeAhorro conoce la concesionaria? SI
+* gastos administrativos en el plan de Ahorro? NO
+* plan de ahorro conoce al concesionario? SI

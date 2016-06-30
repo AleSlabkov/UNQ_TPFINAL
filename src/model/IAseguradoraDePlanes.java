@@ -2,6 +2,6 @@ package model;
 
 public interface IAseguradoraDePlanes {
 
-	float calcularValorDelSeguro(PlanDeAhorro plan, Subscripcion subscripcion);
+	float calcularValorDelSeguro(Integer edad, float montoAdeudado);
 
 }

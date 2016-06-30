@@ -3,10 +3,9 @@ package model;
 public class Aseguradora implements IAseguradoraDePlanes {
 
 	@Override
-	public float calcularValorDelSeguro(PlanDeAhorro plan,
-			Subscripcion subscripcion) {
-		return (float) (getValorSegunEdad(subscripcion.getCliente().getEdad()) + plan
-				.getModelo().getPrecio() * 0.05);
+	public float calcularValorDelSeguro(Integer edad,
+			float montoAdeudado) {
+		return (float) (getValorSegunEdad(edad) + montoAdeudado * 0.05);
 	}
 
 	private float getValorSegunEdad(int edad) {
@@ -14,7 +13,7 @@ public class Aseguradora implements IAseguradoraDePlanes {
 	}
 
 	private int aniosArribaDeCincuenta(double edad) {
-		return (int) (edad < 50 ? 0 : (edad - 50) / 10);
+		return (int) (edad < 50 ? 0 : (edad - 50));
 	}
 
 }

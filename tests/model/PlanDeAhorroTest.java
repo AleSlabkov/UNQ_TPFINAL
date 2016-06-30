@@ -1,29 +1,36 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.*;
 
 public class PlanDeAhorroTest {
 
 	PlanDeAhorro plan;
+	@Mock
+	Concesionario concesionario;
 	@Mock
 	Subscripcion subscripcion1;
 	@Mock
 	Subscripcion subscripcion2;
 	@Mock
 	Modelo modelo;
+	@Mock
+	DocumentosFactory comprobanteFactory;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		plan = new PlanDeAhorro(1, modelo, 84, new Sorteo(null),
-				new Financiamiento100());
+		plan = new PlanDeAhorro(concesionario, 1, modelo, 84, new Sorteo(null),
+				new Financiamiento100(), comprobanteFactory);
 	}
 
 	/**
@@ -34,6 +41,7 @@ public class PlanDeAhorroTest {
 		assertEquals(plan.getNumeroGrupo(), 1, 0);
 		assertEquals(plan.getModelo().getNombre(), modelo.getNombre());
 		assertEquals(plan.getCantidadDeCuotas(), (Integer) 84);
+		assertEquals(plan.getConcesionario(), concesionario);
 	}
 
 	/**
@@ -78,5 +86,31 @@ public class PlanDeAhorroTest {
 		plan.agregarSubscripcion(subscripcion2);
 
 		assertTrue(plan.getSubscripcionesSinAdjudicacion().isEmpty());
+	}
+	
+	/**
+	 * @throws ConcesionarioSinGastosAdministrativosException
+	 * @throws PlanCompletamentePagoException 
+	 */
+	@Test
+	public void registrarPagosTest() throws ConcesionarioSinGastosAdministrativosException, PlanCompletamentePagoException {
+		
+		ComprobanteDePago comprobanteDePago = mock(ComprobanteDePago.class);	
+		when(comprobanteFactory.generarComprobanteDePago(plan, subscripcion1)).thenReturn(comprobanteDePago);
+		
+		assertEquals(plan.registrarPago(subscripcion1), comprobanteDePago);
+	}
+	
+	/**
+	 * Espera una excepción debido a la intención de registrar un pago en un
+	 * plan que se encuentra completamente pago
+	 * @throws PlanCompletamentePagoException 
+	 * @throws ConcesionarioSinGastosAdministrativosException 
+	 */
+	@Test(expected = PlanCompletamentePagoException.class)
+	public void registrarPagoEnPlanCompleto() throws PlanCompletamentePagoException, ConcesionarioSinGastosAdministrativosException {
+		when(subscripcion1.completoPago(plan)).thenReturn(true);
+		
+		plan.registrarPago(subscripcion1);
 	}
 }

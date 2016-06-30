@@ -24,7 +24,7 @@ public class PlantaTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		planta = new Planta("Pacheco", fabrica);
+		planta = new Planta("Pacheco", "Av. Henry Ford y Panamericana", fabrica);
 	}
 
 	/**
@@ -33,6 +33,7 @@ public class PlantaTest {
 	@Test
 	public void crearPlantaTest() {
 		assertEquals(planta.getNombre(), "Pacheco");
+		assertEquals(planta.getDireccion(), "Av. Henry Ford y Panamericana");
 		assertEquals(planta.getFabrica(), fabrica);
 	}
 

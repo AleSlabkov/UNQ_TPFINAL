@@ -7,21 +7,25 @@ import java.util.stream.Collectors;
 
 public class PlanDeAhorro {
 
+	private Concesionario concesionario;
 	private Integer numeroGrupo;
 	private Modelo modelo;
 	private Integer cantidadDeCoutas;
 	private List<Subscripcion> subscripciones;
 	private IAdjudicacion tipoAdjudicacion;
 	private IFinanciamiento financiamiento;
+	private DocumentosFactory documentosFactory;
 
-	public PlanDeAhorro(Integer numeroGrupo, Modelo modelo, Integer cantidadDeCoutas, IAdjudicacion tipoAdjudicacion,
-			IFinanciamiento financiamiento) {
+	public PlanDeAhorro(Concesionario concesionario, Integer numeroGrupo, Modelo modelo, Integer cantidadDeCoutas, IAdjudicacion tipoAdjudicacion,
+			IFinanciamiento financiamiento, DocumentosFactory documentosFactory) {
+		this.concesionario = concesionario;
 		this.numeroGrupo = numeroGrupo;
 		this.modelo = modelo;
 		this.cantidadDeCoutas = cantidadDeCoutas;
 		this.subscripciones = new ArrayList<Subscripcion>();
 		this.tipoAdjudicacion = tipoAdjudicacion;
 		this.financiamiento = financiamiento;
+		this.documentosFactory = documentosFactory;
 	}
 
 	public Integer getNumeroGrupo() {
@@ -52,11 +56,11 @@ public class PlanDeAhorro {
 		this.subscripciones.add(subscripcion);
 	}
 
-	public Subscripcion adjudicar() throws SinAdjudicableException {
+	public Subscripcion adjudicar() throws SinAdjudicableException, ConcesionarioSinGastosAdministrativosException {
 		
 		Subscripcion subscripcion = this.tipoAdjudicacion.adjudicar(this);
 		
-		subscripcion.registrarAdjudicacion(LocalDate.now());
+		subscripcion.registrarAdjudicacion(generarCupon());
 		
 		return subscripcion;
 	}
@@ -68,12 +72,20 @@ public class PlanDeAhorro {
 	public float getAlicuota() {
 		return this.financiamiento.getAlicouta(this);
 	}
-
-	public float getGastosAdministrativos() {
-		return 0;
+	
+	private CuponDeAdjudicacion generarCupon() throws ConcesionarioSinGastosAdministrativosException {
+		return new CuponDeAdjudicacion(LocalDate.now(), concesionario.getGastosAdministrativos(), financiamiento.getCostoNoFinanciado(this));
 	}
 
-	public float getSeguroDeVida() {
-		return 0;
+	public Concesionario getConcesionario() {
+		return this.concesionario;
+	}
+
+	public Object registrarPago(Subscripcion subscripcion) throws ConcesionarioSinGastosAdministrativosException, PlanCompletamentePagoException {
+		
+		if (subscripcion.completoPago(this))
+			throw new PlanCompletamentePagoException();
+		
+		return this.documentosFactory.generarComprobanteDePago(this, subscripcion);
 	}
 }
