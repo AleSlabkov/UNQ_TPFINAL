@@ -4,13 +4,16 @@ import java.time.LocalDate;
 
 public class DocumentosFactory {
 
-	public ComprobanteDePago generarComprobanteDePago(PlanDeAhorro plan,
-			Subscripcion subscripcion)
-			throws ConcesionarioSinGastosAdministrativosException {
-		return new ComprobanteDePago(subscripcion.getProximaCuota(),
-				LocalDate.now(), plan.getAlicuota(), plan.getConcesionario()
-						.getGastosAdministrativos(), plan.getConcesionario()
-						.getSeguroDeVida(subscripcion.getCliente().getEdad(),
-								subscripcion.getMontoAdeudado(plan)));
+	public ComprobanteDePago generarComprobanteDePago(int numeroCuota, float alicuota, float gastosAdministrativos,
+			float costoSeguro) throws ConcesionarioSinGastosAdministrativosException {
+		return new ComprobanteDePago(numeroCuota, LocalDate.now(), alicuota, gastosAdministrativos, costoSeguro);
 	}
+
+	public CuponDeAdjudicacion generarCuponDeAdjudicacion(float costoNoFinanciado, IFleteCotizador fleteCotizador,
+			float distancia) {
+
+		return new CuponDeAdjudicacion(LocalDate.now(), fleteCotizador.getCostoByDistancia(distancia),
+				costoNoFinanciado);
+	}
+
 }

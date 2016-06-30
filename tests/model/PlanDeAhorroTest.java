@@ -3,8 +3,8 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -96,7 +96,7 @@ public class PlanDeAhorroTest {
 	public void registrarPagosTest() throws ConcesionarioSinGastosAdministrativosException, PlanCompletamentePagoException {
 		
 		ComprobanteDePago comprobanteDePago = mock(ComprobanteDePago.class);	
-		when(comprobanteFactory.generarComprobanteDePago(plan, subscripcion1)).thenReturn(comprobanteDePago);
+		when(comprobanteFactory.generarComprobanteDePago(any(), any(), any(), any())).thenReturn(comprobanteDePago);
 		
 		assertEquals(plan.registrarPago(subscripcion1), comprobanteDePago);
 	}
