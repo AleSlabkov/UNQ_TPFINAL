@@ -33,7 +33,16 @@ public class ModeloTest {
 		assertEquals(modelo.getCantidadPuertas(), (Integer) 5);
 		assertEquals(modelo.getFechaLanzamiento(), LocalDate.of(2015, 8, 15));
 		assertTrue(modelo.getFull());
-		assertTrue(modelo.getPrecio() == 490000);
+		assertEquals(modelo.getPrecio() ,490000f, 0);
+	}
+	
+	/**
+	 * Testea la modificación de precio de un modelo
+	 */
+	@Test
+	public void modificarValorModelo(){
+		modelo.setPrecio(385000f);
+		assertEquals(modelo.getPrecio(), 385000f, 0);
 	}
 
 	/**

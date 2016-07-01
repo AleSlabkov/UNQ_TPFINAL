@@ -159,40 +159,15 @@ public class PlanDeAhorroTest {
 		assertEquals(plan.getAlicuota(), 3500f, 0);
 	}
 	
+	/**
+	 * Testea la adjudicación de un Plan de Ahorro
+	 * 
+	 * @throws SinAdjudicableException
+	 * @throws ConcesionarioSinGastosAdministrativosException
+	 */
 	@Test
-	public void adjudicarTest(){
-		
-	}
-	
-	/**
-	 * @throws SinAdjudicableException
-	 * @throws ConcesionarioSinGastosAdministrativosException
-	 */
-	@Test (expected = SinAdjudicableException.class)
-	public void adjudicarTestSinAdjudicables() throws SinAdjudicableException, ConcesionarioSinGastosAdministrativosException{
-		when(subscripcion1.estaAdjudicada()).thenReturn(true);
-		when(subscripcion2.estaAdjudicada()).thenReturn(true);
-		
-		plan.agregarSubscripcion(subscripcion1);
-		plan.agregarSubscripcion(subscripcion2);
-		
-		plan.adjudicar();
-	}
-	
-	/**
-	 * @throws SinAdjudicableException
-	 * @throws ConcesionarioSinGastosAdministrativosException
-	 */
-	@SuppressWarnings("unchecked")
-	@Test (expected = ConcesionarioSinGastosAdministrativosException.class)
-	public void adjudicarTestConcesionarioSinGastosAdministrativos() throws SinAdjudicableException, ConcesionarioSinGastosAdministrativosException{
-		when(subscripcion1.estaAdjudicada()).thenReturn(false);
-		when(financiamiento.getCostoNoFinanciado(plan)).thenReturn(105000f);
-		when(concesionario.getCostoDeFleteByModelo(modelo)).thenReturn(1500f);
-		when(concesionario.getGastosAdministrativos()).thenThrow(ConcesionarioSinGastosAdministrativosException.class);
-			
-		plan.agregarSubscripcion(subscripcion1);
-		
-		plan.adjudicar();
+	public void adjudicarTest() throws SinAdjudicableException, ConcesionarioSinGastosAdministrativosException{
+		when(adjudicacion.adjudicar(plan)).thenReturn(subscripcion1);	
+		assertEquals(plan.adjudicar(), subscripcion1);
 	}
 }

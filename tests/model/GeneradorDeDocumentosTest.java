@@ -1,16 +1,17 @@
 package model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.time.LocalDate;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
-
-public class DocumentosFactoryTest {
+public class GeneradorDeDocumentosTest {
 	
 	private GeneradorDeDocumentos factory;
 	@Mock

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 public class Fabrica implements ICambioStock, IStockObserver {
 
 	private String nombre;
-	private String direccion;
 	private List<Planta> plantas;
 	private List<IStockObserver> stockObservers;
 
@@ -19,10 +18,6 @@ public class Fabrica implements ICambioStock, IStockObserver {
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public String getDireccion() {
-		return this.direccion;
 	}
 
 	public void agregarPlanta(Planta planta) {

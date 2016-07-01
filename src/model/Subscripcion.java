@@ -52,7 +52,7 @@ public class Subscripcion {
 	}
 
 	public Integer getProximaCuota() {
-		return getPagos().size() == 0 ? 1 : getPagos().size() - 1;
+		return getPagos().size() == 0 ? 1 : this.pagos.size() + 1;
 	}
 
 	public float getMontoAdeudado(PlanDeAhorro planDeAhorro) {

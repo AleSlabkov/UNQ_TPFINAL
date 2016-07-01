@@ -10,6 +10,8 @@ import org.mockito.MockitoAnnotations;
 
 public class Financiamiento100Test {
 
+	IFinanciamiento financiamiento;
+
 	@Mock
 	PlanDeAhorro planDeAhorro;
 	@Mock
@@ -21,6 +23,8 @@ public class Financiamiento100Test {
 		when(planDeAhorro.getCantidadDeCuotas()).thenReturn(84);
 		when(planDeAhorro.getModelo()).thenReturn(modelo);
 		when(modelo.getPrecio()).thenReturn(350000f);
+
+		financiamiento = new Financiamiento100();
 	}
 
 	/**
@@ -29,8 +33,15 @@ public class Financiamiento100Test {
 	 */
 	@Test
 	public void getAlicuotaTest() {
-		Financiamiento100 financiamiento = new Financiamiento100();
-
 		assertEquals(financiamiento.getAlicouta(planDeAhorro), 4166.66, 0.01);
 	}
+
+	/**
+	 * Testea que el costo no financiado en un plan 100% sea 0
+	 */
+	@Test
+	public void getCostoNoFinanciadoTest() {
+		assertEquals(financiamiento.getCostoNoFinanciado(planDeAhorro), 0, 0);
+	}
+
 }

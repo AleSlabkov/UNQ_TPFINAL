@@ -18,6 +18,8 @@ public class SubscripcionTest {
 	@Mock
 	private PlanDeAhorro planDeAhorro;
 	@Mock
+	private Modelo modelo;
+	@Mock
 	private ComprobanteDePago comprobanteDePago;
 	private Subscripcion subscripcion;
 
@@ -25,12 +27,14 @@ public class SubscripcionTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(cliente.getEmail()).thenReturn("pepe@pepe.com");
+		when(modelo.getPrecio()).thenReturn(350000f);
+		when(planDeAhorro.getModelo()).thenReturn(modelo);
 		when(planDeAhorro.getCantidadDeCuotas()).thenReturn(84);
 		this.subscripcion = new Subscripcion(cliente);
 	}
 
 	/**
-	 * Crea una subscripcion y testea el acceso a sus colaboradores
+	 * Crea una subscripcion y testea el acceso a sus colaboradores y métodos
 	 */
 	@Test
 	public void crearSubscripcionTest() {
@@ -38,22 +42,24 @@ public class SubscripcionTest {
 		assertEquals(subscripcion.getProporcionDePago(planDeAhorro), 0f, 0);
 		assertTrue(subscripcion.getFechaSubscripcion().isEqual(LocalDate.now()));
 		assertFalse(subscripcion.estaAdjudicada());
+		assertFalse(subscripcion.completoPago(planDeAhorro));
+		assertEquals(subscripcion.getProximaCuota(), 1, 0);
+		assertEquals(subscripcion.getMontoAdeudado(planDeAhorro), 350000f, 0);
 	}
 
 	/**
-	 * Testea registrar dos pagos y comprueba el número consecutivo de cuotas
+	 * Testea registrar un pagos y comprueba el número consecutivo de cuotas
 	 * @throws PlanCompletamentePagoException
 	 */
 	@Test
 	public void registrarPagosTest() {
-		
-		subscripcion.registrarPago(comprobanteDePago);
-		
+		subscripcion.registrarPago(comprobanteDePago);	
 		assertTrue(subscripcion.getPagos().contains(comprobanteDePago));
+		assertEquals(subscripcion.getProximaCuota(), 2, 0);
 	}
 	
 	/**
-	 * Registra pagos y testea la proporción de pago
+	 * Registra 2 pagos y testea la proporción de pago correspondiente a 2 pagos en un plan de 84 cuotas
 	 * 
 	 * @throws PlanCompletamentePagoException
 	 */
