@@ -148,7 +148,7 @@ public class Concesionario implements IStockObserver {
 	 *            buscado
 	 * @return Una Planta de producción
 	 */
-	private Planta getPlantaMasCercanaByModelo(Modelo modelo) {
+	public Planta getPlantaMasCercanaByModelo(Modelo modelo) {
 		return this.fabrica
 				.getPlantasByModelo(modelo)
 				.stream()

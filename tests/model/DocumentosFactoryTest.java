@@ -51,9 +51,8 @@ public class DocumentosFactoryTest {
 	@Test
 	public void crearCuponDeAdjudicacion() {
 
-		when(fleteCotizador.getCostoByDistancia(anyFloat())).thenReturn(1000f);
 		
-		CuponDeAdjudicacion cuponDeAdjudicacion = factory.generarCuponDeAdjudicacion(105000f, fleteCotizador, anyFloat());
+		CuponDeAdjudicacion cuponDeAdjudicacion = factory.generarCuponDeAdjudicacion(1000f, 105000f);
 		
 		assertNotNull(cuponDeAdjudicacion);
 		assertEquals(cuponDeAdjudicacion.getCostoDeFlete(), 1000f, 0);

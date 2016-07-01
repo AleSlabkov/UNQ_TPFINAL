@@ -28,13 +28,17 @@ public class ConcesionarioTest {
 	private Modelo golTrend;
 	@Mock
 	private Modelo vento;
+	@Mock
+	private IGoogleMaps maps;
+	@Mock
+	private IFleteCotizador fleteCotizador;
+	
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		
-		concesionario = new Concesionario("Guido Guidi",
-				"Zapiola 232, Quilmes, Buenos Aires, Argentina", fabrica, aseguradora);
+		concesionario = new Concesionario("Guido Guidi", "Zapiola 232, Quilmes, Buenos Aires, Argentina", fabrica, aseguradora, maps, fleteCotizador);
 
 	}
 
@@ -202,11 +206,10 @@ public class ConcesionarioTest {
 		List<Planta> plantas = new ArrayList<Planta>(Arrays.asList(planta1, planta2));
 		when(fabrica.getPlantasByModelo(golTrend)).thenReturn(plantas);
 		
-		IGoogleMaps maps = mock(IGoogleMaps.class);
 		when(maps.getDistancia(fabrica.getDireccion(), planta1.getDireccion())).thenReturn(600f);
 		when(maps.getDistancia(fabrica.getDireccion(), planta1.getDireccion())).thenReturn(1000f);
 		
-		assertEquals(concesionario.getPlantaMasCercanaByModelo(golTrend, maps), planta1);
+		assertEquals(concesionario.getPlantaMasCercanaByModelo(golTrend), planta1);
 	}
 	
 	/**
