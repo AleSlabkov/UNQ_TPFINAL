@@ -70,9 +70,10 @@ public class Concesionario implements IStockObserver {
 				.findFirst();
 	}
 
-	public Object getStockByModelo(Modelo modelo) {
-		return this.stock.stream().filter(s -> s.getModelo() == modelo)
-				.findFirst().get().getCantidad();
+	public int getStockByModelo(Modelo modelo) {
+		Optional<StockModelo> sm = this.stock.stream().filter(s -> s.getModelo() == modelo).findFirst();
+		 return sm.isPresent()? sm.get().getCantidad() : 0;
+				
 	}
 
 	@Override
