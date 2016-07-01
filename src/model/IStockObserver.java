@@ -16,5 +16,4 @@ public interface IStockObserver {
 	 */
 	void liberarStock(ICambioStock o,  Modelo m, Integer cantidad);
 	
-
 }

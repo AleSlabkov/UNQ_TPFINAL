@@ -59,31 +59,12 @@ public class PlanDeAhorro {
 
 	/**
 	 * Agrega una subscripción al Plan de Ahorro
-	 * 
 	 * @param subscripcion
 	 */
 	public void agregarSubscripcion(Subscripcion subscripcion) {
 		this.subscripciones.add(subscripcion);
 	}
-
-	/**
-	 * Adjudica el plan de ahorro a uno de sus subscriptores
-	 * 
-	 * @return Una subscripcion adjudicada
-	 * @throws SinAdjudicableException
-	 *             cuando el plan ya fue completamente adjudicado
-	 * @throws ConcesionarioSinGastosAdministrativosException
-	 *             cuando el concesionario no registra gastos administrativos
-	 */
-	public Subscripcion adjudicar() throws SinAdjudicableException,
-			ConcesionarioSinGastosAdministrativosException {
-		Subscripcion subscripcion = this.tipoAdjudicacion.adjudicar(this);
-
-		subscripcion.registrarAdjudicacion(generarCupon());
-
-		return subscripcion;
-	}
-
+	
 	/**
 	 * @return Devuelve la lista de suscripciones del plan que aún no han sido adjudicadas
 	 */
@@ -91,6 +72,22 @@ public class PlanDeAhorro {
 		return subscripciones.stream().filter(s -> !s.estaAdjudicada())
 				.collect(Collectors.toList());
 	}
+
+	/**
+	 * Adjudica el plan de ahorro a uno de sus subscriptores
+	 * @return Una subscripcion adjudicada
+	 * @throws SinAdjudicableException  cuando el plan ya fue completamente adjudicado
+	 * @throws ConcesionarioSinGastosAdministrativosException cuando el concesionario no registra gastos administrativos
+	 */
+	public Subscripcion adjudicar() throws SinAdjudicableException,
+			ConcesionarioSinGastosAdministrativosException {
+		Subscripcion subscripcion = this.tipoAdjudicacion.adjudicar(this);
+
+		subscripcion.registrarAdjudicacion(generarCuponDeAdjudicacion());
+
+		return subscripcion;
+	}
+
 
 	/**
 	 * @return Devuelve la alicuota del plan de ahorro según su tipo de financiamiento
@@ -128,7 +125,7 @@ public class PlanDeAhorro {
 	 * @return un cupon de adjudicacion de acuerdo al valor del flete y de costo no financiado
 	 * @throws ConcesionarioSinGastosAdministrativosException
 	 */
-	private CuponDeAdjudicacion generarCupon()
+	private CuponDeAdjudicacion generarCuponDeAdjudicacion()
 			throws ConcesionarioSinGastosAdministrativosException {
 		return generadorDeDocumentos.generarCuponDeAdjudicacion( 
 				this.concesionario.getCostoDeFleteByModelo(this.modelo),

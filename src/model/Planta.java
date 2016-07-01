@@ -70,6 +70,11 @@ public class Planta implements ICambioStock {
 		informarBajaStock(modelo, cantidad);
 	}
 
+	/**
+	 * Actualiza la cantidad de un modelo
+	 * @param modelo
+	 * @param cantidad
+	 */
 	private void updateStock(Modelo modelo, Integer cantidad) {
 		StockModelo stock = this.stock.stream()
 				.filter(s -> s.getModelo() == modelo).findFirst().get();
@@ -77,6 +82,10 @@ public class Planta implements ICambioStock {
 	}
 
 	
+	/**
+	 * @param modelo
+	 * @return la cantidad de un modelo particular
+	 */
 	public Integer getCantidadByModelo(Modelo modelo) {
 		 Optional<StockModelo> op = this.stock.stream().filter(s -> s.getModelo() == modelo).findFirst();
 		 
