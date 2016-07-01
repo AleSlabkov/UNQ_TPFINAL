@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public class DocumentosFactoryTest {
 	
-	private DocumentosFactory factory;
+	private GeneradorDeDocumentos factory;
 	@Mock
 	private PlanDeAhorro planDeAhorro;
 	@Mock
@@ -29,7 +29,7 @@ public class DocumentosFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		factory = new DocumentosFactory();
+		factory = new GeneradorDeDocumentos();
 	}
 
 	/**

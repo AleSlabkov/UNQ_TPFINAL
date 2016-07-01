@@ -15,8 +15,12 @@ public class Concesionario implements IStockObserver {
 	private List<StockModelo> stock;
 	private float gastosAdministrativos;
 	private IAseguradoraDePlanes aseguradora;
+	private IGoogleMaps maps;
+	private IFleteCotizador fleteCotizador;
 
-	public Concesionario(String nombre, String direccion, Fabrica fabrica, IAseguradoraDePlanes aseguradora) {
+	public Concesionario(String nombre, String direccion, Fabrica fabrica,
+			IAseguradoraDePlanes aseguradora, IGoogleMaps maps,
+			IFleteCotizador fleteCotizador) {
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.clientes = new ArrayList<Cliente>();
@@ -24,6 +28,8 @@ public class Concesionario implements IStockObserver {
 		this.fabrica = fabrica;
 		this.stock = new ArrayList<StockModelo>();
 		this.aseguradora = aseguradora;
+		this.maps = maps;
+		this.fleteCotizador = fleteCotizador;
 	}
 
 	public String getNombre() {
@@ -48,6 +54,10 @@ public class Concesionario implements IStockObserver {
 
 	public List<PlanDeAhorro> getPlanesDeAhorro() {
 		return this.planes;
+	}
+
+	public IAseguradoraDePlanes getAseguradora() {
+		return this.aseguradora;
 	}
 
 	public List<PlanDeAhorro> getPlanesConMayorCantidadSubscriptoresTop10OrderByCantidadDesc() {
@@ -100,34 +110,64 @@ public class Concesionario implements IStockObserver {
 
 	}
 
-	public Planta getPlantaMasCercanaByModelo(Modelo modelo, IGoogleMaps maps) {
-		return this.fabrica
-				.getPlantasByModelo(modelo)
-				.stream()
-				.min((p1, p2) -> Float.compare(
-						maps.getDistancia(this.direccion, p1.getDireccion()),
-						maps.getDistancia(this.direccion, p2.getDireccion())))
-				.get();
+	public float getCostoDeFleteByModelo(Modelo modelo) {
+		return fleteCotizador
+				.getCostoByDistancia(getDistanciaAPlantaMasCercanaByModelo(modelo));
 	}
 
 	public void modificarValorGastosAdministrativos(float valor) {
 		this.gastosAdministrativos = valor;
 	}
-	
-	public float getGastosAdministrativos() throws ConcesionarioSinGastosAdministrativosException{
-		
-		if(this.gastosAdministrativos == 0)
+
+	public float getGastosAdministrativos()
+			throws ConcesionarioSinGastosAdministrativosException {
+
+		if (this.gastosAdministrativos == 0)
 			throw new ConcesionarioSinGastosAdministrativosException();
-		
+
 		return this.gastosAdministrativos;
 	}
 
+	/**
+	 * Retorna el valor del seguro de vida de acuerdo a la aseguradora
+	 * 
+	 * @param edad del asegurado
+	 * @param montoAdeudado por el asegurado
+	 * @return valor del seguro en float
+	 */
 	public float getSeguroDeVida(Integer edad, float montoAdeudado) {
 		return this.aseguradora.calcularValorDelSeguro(edad, montoAdeudado);
 	}
 
-	public IAseguradoraDePlanes getAseguradora() {
-		return this.aseguradora;
+	/**
+	 * Devuelve la Planta de producción mas cercana al concesionario que produce
+	 * el modelo buscado
+	 * 
+	 * @param modelo
+	 *            buscado
+	 * @return Una Planta de producción
+	 */
+	private Planta getPlantaMasCercanaByModelo(Modelo modelo) {
+		return this.fabrica
+				.getPlantasByModelo(modelo)
+				.stream()
+				.min((p1, p2) -> Float.compare(
+						this.maps.getDistancia(this.direccion,
+								p1.getDireccion()),
+						this.maps.getDistancia(this.direccion,
+								p2.getDireccion()))).get();
+	}
+
+	/**
+	 * Devuelve la distancia a la Planta de producción mas cercana al
+	 * concesionario que produce el modelo buscado
+	 * 
+	 * @param modelobuscado
+	 * @return Una distancia en float
+	 */
+	private float getDistanciaAPlantaMasCercanaByModelo(Modelo modelo) {
+		return this.maps.getDistancia(this.direccion,
+				getPlantaMasCercanaByModelo(modelo).getDireccion());
 	}
 
 }
