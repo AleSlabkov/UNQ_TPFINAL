@@ -3,8 +3,11 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyFloat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +31,7 @@ public class PlanDeAhorroTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-
+		
 		plan = new PlanDeAhorro(concesionario, 1, modelo, 84, new Sorteo(null),
 				new Financiamiento100(), comprobanteFactory);
 	}
@@ -93,12 +96,17 @@ public class PlanDeAhorroTest {
 	 * @throws PlanCompletamentePagoException 
 	 */
 	@Test
-	public void registrarPagosTest() throws ConcesionarioSinGastosAdministrativosException, PlanCompletamentePagoException {
+	public void registrarPagosTest() throws  PlanCompletamentePagoException, ConcesionarioSinGastosAdministrativosException {
 		
 		ComprobanteDePago comprobanteDePago = mock(ComprobanteDePago.class);	
-		when(comprobanteFactory.generarComprobanteDePago(any(), any(), any(), any())).thenReturn(comprobanteDePago);
+		when(comprobanteFactory.generarComprobanteDePago(anyInt(), anyFloat(), anyFloat(), anyFloat())).thenReturn(comprobanteDePago);
 		
-		assertEquals(plan.registrarPago(subscripcion1), comprobanteDePago);
+		when(subscripcion1.getCliente()).thenReturn(mock(Cliente.class));
+		when(concesionario.getAseguradora()).thenReturn(mock(Aseguradora.class));
+		
+		plan.registrarPago(subscripcion1);
+		
+		verify(subscripcion1).registrarPago(comprobanteDePago);
 	}
 	
 	/**

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class DocumentosFactory {
 
 	public ComprobanteDePago generarComprobanteDePago(int numeroCuota, float alicuota, float gastosAdministrativos,
-			float costoSeguro) throws ConcesionarioSinGastosAdministrativosException {
+			float costoSeguro) {
 		return new ComprobanteDePago(numeroCuota, LocalDate.now(), alicuota, gastosAdministrativos, costoSeguro);
 	}
 

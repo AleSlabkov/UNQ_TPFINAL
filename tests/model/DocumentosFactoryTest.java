@@ -33,46 +33,33 @@ public class DocumentosFactoryTest {
 	}
 
 	/**
-	 * @throws ConcesionarioSinGastosAdministrativosException
+	 * Testea la creación de un comprobante de pago
 	 */
 	@Test
-	public void crearComprobanteDePagoTest() throws ConcesionarioSinGastosAdministrativosException {
+	public void crearComprobanteDePagoTest() {
 		
-		ComprobanteDePago cp = factory.generarComprobanteDePago(1, 12f, 12f, 12f);
+		ComprobanteDePago comprobanteDePago = factory.generarComprobanteDePago(1, 3500f, 500f, 120f);
 		
-		assertNotNull(cp);
-		assertEquals(12f, cp.getAlicuota(), 0);
-		assertEquals(12f, cp.getGastosAdministrativos(), 0);
-		assertEquals(1, cp.getNumeroDeCuota(), 0);
-		assertEquals(12f, cp.getSeguroDeVida(), 0);
-		assertTrue(cp.getFechaDePago().isAfter(LocalDate.now()));
+		assertNotNull(comprobanteDePago);
+		assertEquals(comprobanteDePago.getAlicuota(), 3500f, 0);
+		assertEquals(comprobanteDePago.getGastosAdministrativos(), 500f, 0);
+		assertEquals(comprobanteDePago.getNumeroDeCuota(), 1, 0);
+		assertEquals(comprobanteDePago.getSeguroDeVida(), 120f, 0);
+		assertTrue(comprobanteDePago.getFechaDePago().isEqual(LocalDate.now()));
 	}
 	
-	/**
-	 * @throws ConcesionarioSinGastosAdministrativosException
-	 */
-	@SuppressWarnings("unchecked")
-	@Test (expected = ConcesionarioSinGastosAdministrativosException.class)
-	public void crearComprobanteDePagoExceptionTest() throws ConcesionarioSinGastosAdministrativosException {
-		when(planDeAhorro.getConcesionario()).thenReturn(concesionario);
-		when(planDeAhorro.getConcesionario().getGastosAdministrativos()).thenThrow(ConcesionarioSinGastosAdministrativosException.class);
-		
-		factory.generarComprobanteDePago(1, 12f, 12f,12f);
-	}
-	
-	/**
-	 * @throws ConcesionarioSinGastosAdministrativosException
-	 */
 	@Test
 	public void crearCuponDeAdjudicacion() {
 
-		when(fleteCotizador.getCostoByDistancia(10f)).thenReturn(1000f);
+		when(fleteCotizador.getCostoByDistancia(anyFloat())).thenReturn(1000f);
 		
-		CuponDeAdjudicacion ca = factory.generarCuponDeAdjudicacion(3f, fleteCotizador, 10f);
+		CuponDeAdjudicacion cuponDeAdjudicacion = factory.generarCuponDeAdjudicacion(105000f, fleteCotizador, anyFloat());
 		
-		assertNotNull(ca);
-		assertEquals(1000f, ca.getCostoDeFlete(), 0);
-		assertEquals(1003f, ca.getCostoAdjudicacion(), 0);
+		assertNotNull(cuponDeAdjudicacion);
+		assertEquals(cuponDeAdjudicacion.getCostoDeFlete(), 1000f, 0);
+		assertEquals(cuponDeAdjudicacion.getCostoNoFinanciado(), 105000f, 0);
+		assertEquals(cuponDeAdjudicacion.getCostoAdjudicacion(), 106000f, 0);
+		assertTrue(cuponDeAdjudicacion.getFecha().isEqual(LocalDate.now()));
 	}
 	
 

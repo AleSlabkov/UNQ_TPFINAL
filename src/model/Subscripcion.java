@@ -25,7 +25,7 @@ public class Subscripcion {
 	public LocalDate getFechaSubscripcion() {
 		return this.fechaSubscripcion;
 	}
-	
+
 	public List<ComprobanteDePago> getPagos() {
 		return this.pagos;
 	}
@@ -46,20 +46,21 @@ public class Subscripcion {
 	public boolean estaAdjudicada() {
 		return this.adjudicacion != null;
 	}
-	
+
 	public boolean completoPago(PlanDeAhorro planDeAhorro) {
-		return planDeAhorro.getCantidadDeCuotas() == this.pagos.size();
+		return planDeAhorro.getCantidadDeCuotas() == getPagos().size();
 	}
 
 	public Integer getProximaCuota() {
-		return this.pagos.size() == 0 ? 1 : this.pagos.get(this.pagos.size()-1).getNumeroDeCuota() + 1;
+		return getPagos().size() == 0 ? 1 : getPagos().size() - 1;
 	}
 
 	public float getMontoAdeudado(PlanDeAhorro planDeAhorro) {
-		return (planDeAhorro.getModelo().getPrecio() / planDeAhorro.getCantidadDeCuotas()) * cuotasRestantes(planDeAhorro);
+		return (planDeAhorro.getModelo().getPrecio() / planDeAhorro
+				.getCantidadDeCuotas()) * cuotasRestantes(planDeAhorro);
 	}
 
 	private float cuotasRestantes(PlanDeAhorro planDeAhorro) {
-		return planDeAhorro.getCantidadDeCuotas() - this.pagos.size();
+		return planDeAhorro.getCantidadDeCuotas() - getPagos().size();
 	}
 }
