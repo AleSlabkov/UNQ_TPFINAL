@@ -12,7 +12,7 @@ public class Aseguradora implements IAseguradoraDePlanes {
 		return 50 + 10 * aniosArribaDeCincuenta(edad);
 	}
 
-	private int aniosArribaDeCincuenta(double edad) {
+	private int aniosArribaDeCincuenta(int edad) {
 		return (int) (edad < 50 ? 0 : (edad - 50));
 	}
 
