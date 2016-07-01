@@ -25,7 +25,7 @@ public class AdjudicacionSorteoTest {
 		sorteo = new Sorteo(rndMock);
 	}
 
-	/**
+	/**Testea la adjudicación por sorteo de un plan
 	 * @throws SinAdjudicableException
 	 */
 	@SuppressWarnings("unchecked")
@@ -33,30 +33,25 @@ public class AdjudicacionSorteoTest {
 	public void adjudicar() throws SinAdjudicableException {
 		
 		PlanDeAhorro plan = mock(PlanDeAhorro.class);
-		
 		Subscripcion subscripcion = mock(Subscripcion.class);
 		
 		List<Subscripcion> subscripcionesSinAdjudicacion = mock(List.class);
 		when(subscripcionesSinAdjudicacion.get(1)).thenReturn(subscripcion);
 		when(subscripcionesSinAdjudicacion.size()).thenReturn(3);
-
 		when(plan.getSubscripcionesSinAdjudicacion()).thenReturn(subscripcionesSinAdjudicacion);
 		when(rndMock.nextInt(3)).thenReturn(1);
 		
 		assertEquals(sorteo.adjudicar(plan), subscripcion);
-
 		verify(rndMock).nextInt(3);
 		
 	}
 	
-	/**
+	/**Espera una excepción por tratarse de un plan completamente adjudicado
 	 * @throws SinAdjudicableException
 	 */
 	@Test(expected = SinAdjudicableException.class)
 	public void adjudicarSinAdjudicacionesDisponibles() throws SinAdjudicableException {
-	
-		PlanDeAhorro plan = mock(PlanDeAhorro.class);
-		
+		PlanDeAhorro plan = mock(PlanDeAhorro.class);	
 		when(plan.getSubscripcionesSinAdjudicacion()).thenReturn(new ArrayList<Subscripcion>());
 		
 		sorteo.adjudicar(plan);

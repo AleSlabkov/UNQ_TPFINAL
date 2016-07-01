@@ -49,10 +49,11 @@ public class GeneradorDeDocumentosTest {
 		assertTrue(comprobanteDePago.getFechaDePago().isEqual(LocalDate.now()));
 	}
 	
+	/**
+	 * Testea la creación de un cupón de adjudicación
+	 */
 	@Test
-	public void crearCuponDeAdjudicacion() {
-
-		
+	public void crearCuponDeAdjudicacion() {		
 		CuponDeAdjudicacion cuponDeAdjudicacion = factory.generarCuponDeAdjudicacion(1000f, 105000f);
 		
 		assertNotNull(cuponDeAdjudicacion);

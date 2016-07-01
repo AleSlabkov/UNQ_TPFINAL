@@ -18,8 +18,7 @@ public class ModeloTest {
 
 	@Before
 	public void setUp() throws Exception {
-		modelo = new Modelo("Ford Focus", 5, LocalDate.of(2015, 8, 15), true,
-				490000);
+		modelo = new Modelo("Ford Focus", 5, LocalDate.of(2015, 8, 15), true, 490000);
 		MockitoAnnotations.initMocks(this);
 		when(planta.getNombre()).thenReturn("Pacheco");
 	}

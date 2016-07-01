@@ -17,7 +17,6 @@ public class FabricaTest {
 
 	@Before
 	public void setUp() throws Exception {
-
 		fabrica = new Fabrica("Ford");
 	}
 
@@ -34,9 +33,7 @@ public class FabricaTest {
 	 */
 	@Test
 	public void agregarPlantaTest() {
-		Planta planta = mock(Planta.class);
-
-		fabrica.agregarPlanta(planta);
+		fabrica.agregarPlanta(mock(Planta.class));
 
 		assertEquals(fabrica.getPlantas().size(), 1);
 	}

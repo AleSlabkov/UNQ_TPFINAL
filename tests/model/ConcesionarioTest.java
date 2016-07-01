@@ -79,6 +79,9 @@ public class ConcesionarioTest {
 		assertEquals(concesionario.getPlanesDeAhorro().get(0), planDeAhorro);
 	}
 
+	/**
+	 * Testea la obtención de un plan de ahorro por su número
+	 */
 	@Test
 	public void getPlanAhorroByNumeroGrupoTest() {
 
@@ -93,7 +96,7 @@ public class ConcesionarioTest {
 	}
 
 	/**
-	 * 
+	 * Testea la obtención de los 10 planes con mayor cantidad de subscriptores
 	 */
 	@SuppressWarnings("unchecked")
 	@Test

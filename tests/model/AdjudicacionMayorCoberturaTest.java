@@ -25,7 +25,7 @@ public class AdjudicacionMayorCoberturaTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	/**
+	/**Testea la adjudicación de un plan con un único adjudicatario posible
 	 * @throws SinAdjudicableException
 	 */
 	@Test
@@ -45,6 +45,8 @@ public class AdjudicacionMayorCoberturaTest {
 	}
 	
 	/**
+	 * Testea la adjudicación de un plan con más de un adjudicatario posible
+	 * y definición por antiguedad de cliente
 	 * @throws SinAdjudicableException
 	 */
 	@Test
@@ -71,6 +73,8 @@ public class AdjudicacionMayorCoberturaTest {
 	}
 	
 	/**
+	 * Testea la adjudicación de un plan con más de un adjudicatario posible
+	 * y definición por fecha de subscripción al plan
 	 * @throws SinAdjudicableException
 	 */
 	@Test
@@ -100,6 +104,7 @@ public class AdjudicacionMayorCoberturaTest {
 	}
 	
 	/**
+	 * Espera una excepción por tratarse de un plan completamente adjudicado
 	 * @throws SinAdjudicableException
 	 */
 	@Test(expected = SinAdjudicableException.class)

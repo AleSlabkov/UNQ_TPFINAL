@@ -109,10 +109,8 @@ public class PlanDeAhorroTest {
 			ConcesionarioSinGastosAdministrativosException {
 
 		ComprobanteDePago comprobanteDePago = mock(ComprobanteDePago.class);
-		when(
-				generadorDeDocumentos.generarComprobanteDePago(anyInt(),
-						anyFloat(), anyFloat(), anyFloat())).thenReturn(
-				comprobanteDePago);
+		when(generadorDeDocumentos.generarComprobanteDePago(anyInt(),anyFloat(), anyFloat(), anyFloat()))
+			.thenReturn(comprobanteDePago);
 
 		when(subscripcion1.getCliente()).thenReturn(mock(Cliente.class));
 		when(concesionario.getAseguradora())
@@ -138,27 +136,31 @@ public class PlanDeAhorroTest {
 
 		plan.registrarPago(subscripcion1);
 	}
-	
+
+	/**Espera una excepción debido que el concesionario no registra gastos admisnitrativos
+	 * @throws PlanCompletamentePagoException
+	 * @throws ConcesionarioSinGastosAdministrativosException
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(expected = ConcesionarioSinGastosAdministrativosException.class)
 	public void registrarPagoConConsionarioSinGastosAdministrativos()
 			throws PlanCompletamentePagoException,
 			ConcesionarioSinGastosAdministrativosException {
-		when(concesionario.getGastosAdministrativos()).thenThrow(ConcesionarioSinGastosAdministrativosException.class);
+		when(concesionario.getGastosAdministrativos()).thenThrow(
+				ConcesionarioSinGastosAdministrativosException.class);
 
 		plan.registrarPago(subscripcion1);
 	}
-	
+
 	/**
 	 * Testea la obtención de la alicuota según el tipo de financiamiento
 	 */
 	@Test
-	public void getAlicuota()
-	{
-		when(financiamiento.getAlicouta(plan)).thenReturn(3500f);	
+	public void getAlicuota() {
+		when(financiamiento.getAlicouta(plan)).thenReturn(3500f);
 		assertEquals(plan.getAlicuota(), 3500f, 0);
 	}
-	
+
 	/**
 	 * Testea la adjudicación de un Plan de Ahorro
 	 * 
@@ -166,8 +168,9 @@ public class PlanDeAhorroTest {
 	 * @throws ConcesionarioSinGastosAdministrativosException
 	 */
 	@Test
-	public void adjudicarTest() throws SinAdjudicableException, ConcesionarioSinGastosAdministrativosException{
-		when(adjudicacion.adjudicar(plan)).thenReturn(subscripcion1);	
+	public void adjudicarTest() throws SinAdjudicableException,
+			ConcesionarioSinGastosAdministrativosException {
+		when(adjudicacion.adjudicar(plan)).thenReturn(subscripcion1);
 		assertEquals(plan.adjudicar(), subscripcion1);
 	}
 }
