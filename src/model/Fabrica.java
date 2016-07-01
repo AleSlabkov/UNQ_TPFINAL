@@ -34,7 +34,6 @@ public class Fabrica implements ICambioStock, IStockObserver {
 	 * modelo consultado
 	 * 
 	 * @param modelo
-	 *            a buscar
 	 * @return Una lista de Plantas
 	 */
 	public List<Planta> getPlantasByModelo(Modelo modelo) {

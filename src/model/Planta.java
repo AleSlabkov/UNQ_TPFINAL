@@ -41,7 +41,11 @@ public class Planta implements ICambioStock {
 	public void agregarModeloProducido(Modelo modelo) {
 		this.modelosProducidos.add(modelo);
 	}
-
+	
+	/** Produce un modelo/cantidad y luego notifica a los subscriptores de dicho cambio
+	 * @param modelo
+	 * @param cantidad
+	 */
 	public void producirModelo(Modelo modelo, int cantidad) {
 		if (this.stock.stream().anyMatch(s -> s.getModelo() == modelo)) {
 			updateStock(modelo, cantidad);
@@ -72,6 +76,7 @@ public class Planta implements ICambioStock {
 		stock.setCantidad(stock.getCantidad() + cantidad);
 	}
 
+	
 	public Integer getCantidadByModelo(Modelo modelo) {
 		 Optional<StockModelo> op = this.stock.stream().filter(s -> s.getModelo() == modelo).findFirst();
 		 

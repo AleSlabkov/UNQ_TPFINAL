@@ -26,6 +26,9 @@ public class CuponDeAdjudicacion {
 		return costoNoFinanciado;
 	}
 
+	/**
+	 * @return Costo total de la adjudicacion
+	 */
 	public float getCostoAdjudicacion() {
 		return costoDeFlete + costoNoFinanciado;
 	}

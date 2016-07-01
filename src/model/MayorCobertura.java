@@ -22,16 +22,14 @@ public class MayorCobertura implements IAdjudicacion {
 		Subscripcion subscripcion;
 
 		if (adjudicables.size() == 1) 
-		{
 			subscripcion = adjudicables.get(0);
-		} 
 		else 
 		{
 			adjudicables = getAdjudicablesPorFechaDeIngreso(plan, adjudicables);
+			
 			if (adjudicables.size() == 1) 
-			{
 				subscripcion = adjudicables.get(0);
-			} 
+			
 			else 
 			{
 				adjudicables = getAdjudicablesPorFechaDeSubscripcion(plan, adjudicables);
@@ -42,10 +40,10 @@ public class MayorCobertura implements IAdjudicacion {
 		return subscripcion;
 	}
 
-	/**
+	/** 
 	 * @param plan
 	 * @param subscripciones
-	 * @return
+	 * @return subscripciones adjudicables por mayor cobertura
 	 */
 	private List<Subscripcion> getAdjudicablesPorMayorCobertura(
 			PlanDeAhorro plan, List<Subscripcion> subscripcionesSinAdjudicacion) {
@@ -60,6 +58,11 @@ public class MayorCobertura implements IAdjudicacion {
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * @param plan
+	 * @param subscripcionesSinAdjudicacion
+	 * @return subscripciones adjudicables por fecha de ingreso asc
+	 */
 	private List<Subscripcion> getAdjudicablesPorFechaDeIngreso(
 			PlanDeAhorro plan, List<Subscripcion> subscripcionesSinAdjudicacion) {
 		LocalDate primerIngreso = subscripcionesSinAdjudicacion.stream()
@@ -72,6 +75,11 @@ public class MayorCobertura implements IAdjudicacion {
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * @param plan
+	 * @param subscripcionesSinAdjudicacion
+	 * @return subscripciones adjudicables por fecha de subscripcion asc
+	 */
 	private List<Subscripcion> getAdjudicablesPorFechaDeSubscripcion(
 			PlanDeAhorro plan, List<Subscripcion> subscripcionesSinAdjudicacion) {
 		LocalDate primerInscripcion = subscripcionesSinAdjudicacion.stream()

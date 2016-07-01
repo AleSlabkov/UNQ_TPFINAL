@@ -12,7 +12,6 @@ public class ComprobanteDePago {
 	
 	public ComprobanteDePago(Integer numeroDeCouta, LocalDate fechaDePago,
 			float alicuota, float gastosAdministrativos, float seguroDeVida) {
-		super();
 		this.numeroDeCouta = numeroDeCouta;
 		this.fechaDePago = fechaDePago;
 		this.alicuota = alicuota;

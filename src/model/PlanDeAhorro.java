@@ -85,8 +85,7 @@ public class PlanDeAhorro {
 	}
 
 	/**
-	 * @return Devuelve la lista de suscripciones del plan que aún no han sido
-	 *         adjudicadas
+	 * @return Devuelve la lista de suscripciones del plan que aún no han sido adjudicadas
 	 */
 	public List<Subscripcion> getSubscripcionesSinAdjudicacion() {
 		return subscripciones.stream().filter(s -> !s.estaAdjudicada())
@@ -94,13 +93,18 @@ public class PlanDeAhorro {
 	}
 
 	/**
-	 * @return Devuelve la alicuota del plan de ahorro según su tipo de
-	 *         financiamiento
+	 * @return Devuelve la alicuota del plan de ahorro según su tipo de financiamiento
 	 */
 	public float getAlicuota() {
 		return this.financiamiento.getAlicouta(this);
 	}
 
+	
+	/** registra el pago a una subscripcion, generando previamente el comprobante de pago
+	 * @param subscripcion
+	 * @throws ConcesionarioSinGastosAdministrativosException
+	 * @throws PlanCompletamentePagoException
+	 */
 	public void registrarPago(Subscripcion subscripcion)
 			throws ConcesionarioSinGastosAdministrativosException,
 			PlanCompletamentePagoException {
@@ -121,7 +125,7 @@ public class PlanDeAhorro {
 	}
 
 	/**
-	 * @return
+	 * @return un cupon de adjudicacion de acuerdo al valor del flete y de costo no financiado
 	 * @throws ConcesionarioSinGastosAdministrativosException
 	 */
 	private CuponDeAdjudicacion generarCupon()

@@ -10,7 +10,7 @@ public class Cliente {
 	private String email;
 	private LocalDate fechaDeNacimiento;
 	private LocalDate fechaDeIngreso;
-
+	
 	public Cliente(String nombre, String apellido, String dni, String direccion, String email, LocalDate fechaDeNacimiento,
 			LocalDate fechaDeIngreso) {
 
